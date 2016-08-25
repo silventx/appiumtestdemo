@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite hostname="DESKTOP-TARJF5B" name="com.xpower.appiumtestdemo.GameBoxTest" tests="1" failures="0" timestamp="3 Aug 2016 08:04:49 GMT" time="7.76" errors="0">
+  <testcase name="@BeforeMethod setUp" time="0.0" classname="com.xpower.appiumtestdemo.GameBoxTest">
+    <failure type="org.openqa.selenium.SessionNotCreatedException" message="A new session could not be created. (Original error: Activity used to start app doesn&amp;apos;t exist or cannot be launched! Make sure it exists and is a launchable activity) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 7.47 seconds
+Build info: version: &amp;apos;2.43.1&amp;apos;, revision: &amp;apos;5163bceef1bc36d43f3dc0b83c88998168a363a0&amp;apos;, time: &amp;apos;2014-09-10 09:43:55&amp;apos;
+System info: host: &amp;apos;DESKTOP-TARJF5B&amp;apos;, ip: &amp;apos;192.168.177.2&amp;apos;, os.name: &amp;apos;Windows 10&amp;apos;, os.arch: &amp;apos;x86&amp;apos;, os.version: &amp;apos;10.0&amp;apos;, java.version: &amp;apos;1.8.0_91&amp;apos;
+Driver info: io.appium.java_client.android.AndroidDriver">
+      <![CDATA[org.openqa.selenium.SessionNotCreatedException: A new session could not be created. (Original error: Activity used to start app doesn't exist or cannot be launched! Make sure it exists and is a launchable activity) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 7.47 seconds
+Build info: version: '2.43.1', revision: '5163bceef1bc36d43f3dc0b83c88998168a363a0', time: '2014-09-10 09:43:55'
+System info: host: 'DESKTOP-TARJF5B', ip: '192.168.177.2', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_91'
+Driver info: io.appium.java_client.android.AndroidDriver
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:204)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:156)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:599)
+	at io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:176)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:240)
+	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:126)
+	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:153)
+	at io.appium.java_client.AppiumDriver.<init>(AppiumDriver.java:107)
+	at io.appium.java_client.android.AndroidDriver.<init>(AndroidDriver.java:40)
+	at com.xpower.appiumtestdemo.GameBoxTest.setUp(ZhiHuTest.java:45)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+... Removed 34 stack frames]]>
+    </failure>
+  </testcase>
+  <testcase name="@AfterMethod tearDown" time="0.0" classname="com.xpower.appiumtestdemo.GameBoxTest">
+    <failure type="java.lang.NullPointerException">
+      <![CDATA[java.lang.NullPointerException
+	at com.xpower.appiumtestdemo.GameBoxTest.tearDown(ZhiHuTest.java:50)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+... Removed 30 stack frames]]>
+    </failure>
+  </testcase>
+  <testcase name="Login" time="0.0" classname="com.xpower.appiumtestdemo.GameBoxTest">
+    <skipped/>
+  </testcase>
+</testsuite>

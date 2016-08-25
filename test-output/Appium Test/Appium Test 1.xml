@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite hostname="DESKTOP-TARJF5B" name="com.xpower.appiumtestdemo.GameBoxTest" tests="1" failures="0" timestamp="25 Aug 2016 07:34:50 GMT" time="486.879" errors="0">
+  <testcase name="testAll" time="486.696" classname="com.xpower.appiumtestdemo.GameBoxTest"/>
+</testsuite>

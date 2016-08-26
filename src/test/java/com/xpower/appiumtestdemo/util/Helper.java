@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.w3c.dom.NamedNodeMap;
 
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.util.List;
@@ -274,13 +275,16 @@ public class Helper {
     }
 
     //获得当前屏幕的截图
-    public void snapShot(ExtentTest test) {
+    public void snapShot(ExtentTest test, String description) {
         String filename = Long.toString(System.currentTimeMillis());
         ScreenSrc.getScreen(driver, Long.toString(System.currentTimeMillis()));
         if (test != null) {
             String img = test.addScreenCapture(System.getProperty("user.dir") + "\\img\\"+filename+".png");
-            test.log(LogStatus.INFO, "Image", "SnapShot:" + img);
-            System.out.print("");
+            if (description != null) {
+                test.log(LogStatus.INFO, description, "SnapShot:" + img);
+            } else {
+                test.log(LogStatus.INFO, "Snapshot", "SnapShot:" + img);
+            }
         }
     }
 

@@ -49,7 +49,7 @@ public class UIActivity extends Helper{
         this.extent = GameBoxTest.getExtent();
         this.extentTest = extent.startTest(this.activityName);
 
-        snapShot(extentTest);
+//        snapShot(extentTest);
     }
 
     @Test

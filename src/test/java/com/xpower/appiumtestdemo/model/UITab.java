@@ -40,7 +40,7 @@ public class UITab extends Helper{
             System.out.println("new uitab created!" + " parent=" + this.parent.getActivityName());
         }
 
-        snapShot(parent.getExtentTest());
+        snapShot(parent.getExtentTest(), null);
     }
 
     public void performClick() {
@@ -83,7 +83,7 @@ public class UITab extends Helper{
     private void clickOver() throws TimeoutException {
         if (!getCurrentActivity().equals(this.getActivityName())) { //点击进入新的Activity
             if (hasChecked(getCurrentActivity())) { //若当前页面已被遍历过则直接返回，不再遍历
-                snapShot(parent.getExtentTest());
+                snapShot(parent.getExtentTest(), "This activity has checked");
                 goBack();
                 System.out.println("has checked!Checked Activities");
 //                for (int i = 0; i < ActivityIterator.checkedList.size(); i++) {
@@ -96,16 +96,15 @@ public class UITab extends Helper{
                 UIActivity activity = new UIActivity(this.parent);
                 ActivityIterator.stack.push(activity);
                 System.out.println("push: " + activity.getActivityName() + " current stack size: " + ActivityIterator.stack.size());
-                writeLog("push: " + activity.getActivityName() + " current stack size: " + ActivityIterator.stack.size());
                 ActivityIterator.checkedList.add(activity.getActivityName());
                 activity.performClick();
 
             }
         } else if (isDialogShown()) { //仍在同一个Activity但是出现弹窗
-            snapShot(parent.getExtentTest());
+            snapShot(parent.getExtentTest(), null);
             closeDialog();
         } else if (activityName.equals("com.m4399.libs.plugins.PluginProxyActivity") && getCurrentActivity().equals("com.m4399.libs.plugins.PluginProxyActivity")) { //针对PluginProxyActivity的特殊情况
-            snapShot(parent.getExtentTest());
+            snapShot(parent.getExtentTest(), null);
             closeDialog();
         }
 

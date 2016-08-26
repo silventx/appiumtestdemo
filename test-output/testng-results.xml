@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Appium Test" duration-ms="486879" started-at="2016-08-25T15:26:43Z" finished-at="2016-08-25T15:34:50Z">
+  <suite name="Appium Test" duration-ms="1399867" started-at="2016-08-25T17:51:07Z" finished-at="2016-08-25T18:14:27Z">
     <groups>
     </groups>
-    <test name="Appium Test 1" duration-ms="486879" started-at="2016-08-25T15:26:43Z" finished-at="2016-08-25T15:34:50Z">
+    <test name="Appium Test 1" duration-ms="1399867" started-at="2016-08-25T17:51:07Z" finished-at="2016-08-25T18:14:27Z">
       <class name="com.xpower.appiumtestdemo.GameBoxTest">
-        <test-method status="PASS" signature="setUp()" name="setUp" is-config="true" duration-ms="8372" started-at="2016-08-25T15:26:34Z" finished-at="2016-08-25T15:26:43Z">
+        <test-method status="PASS" signature="setUp()" name="setUp" is-config="true" duration-ms="26624" started-at="2016-08-25T17:50:40Z" finished-at="2016-08-25T17:51:07Z">
         </test-method>
-        <test-method status="PASS" signature="testAll()" name="testAll" duration-ms="486696" started-at="2016-08-25T15:26:43Z" finished-at="2016-08-25T15:34:49Z">
+        <test-method status="PASS" signature="testAll()" name="testAll" duration-ms="1399392" started-at="2016-08-25T17:51:07Z" finished-at="2016-08-25T18:14:26Z">
         </test-method>
-        <test-method status="PASS" signature="tearDown()" name="tearDown" is-config="true" duration-ms="1952" started-at="2016-08-25T15:34:50Z" finished-at="2016-08-25T15:34:52Z">
+        <test-method status="PASS" signature="tearDown()" name="tearDown" is-config="true" duration-ms="3026" started-at="2016-08-25T18:14:27Z" finished-at="2016-08-25T18:14:30Z">
         </test-method>
       </class>
     </test>

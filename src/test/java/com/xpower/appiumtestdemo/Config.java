@@ -39,9 +39,9 @@ public class Config {
 
     public static final String[] ITERATOR_LIST = {
             "//android.widget.LinearLayout[@clickable='true' and not(contains(@resource-id, 'Download')) and not(contains(@resource-id, 'hotWordText')) and not(contains(@resource-id, 'Comment')) and not(contains(@resource-id, 'Like')) and not(contains(@resource-id, 'Forward'))]",
-//            "//android.widget.FrameLayout[@clickable='true' and not(contains(@resource-id, 'Download')) and not(contains(@resource-id, 'btn_game_action'))]",
-//            "//android.widget.ImageView[@clickable='true' and not(contains(@resource-id, 'screenshot'))]",
-//            "//android.widget.RelativeLayout[@clickable='true'  and not(contains(@resource-id, 'parentView'))]//android.widget.TextView[not(contains(@resource-id, 'tab')) and not(contains(@resource-id, 'item')) and not(contains(@resource-id, 'actionbar')) and not(contains(@resource-id, 'back')) and not(contains(@resource-id, 'Like'))]/.."
+            "//android.widget.FrameLayout[@clickable='true' and not(contains(@resource-id, 'Download')) and not(contains(@resource-id, 'btn_game_action'))]",
+            "//android.widget.ImageView[@clickable='true' and not(contains(@resource-id, 'screenshot'))]",
+            "//android.widget.RelativeLayout[@clickable='true'  and not(contains(@resource-id, 'parentView'))]//android.widget.TextView[not(contains(@resource-id, 'tab')) and not(contains(@resource-id, 'item')) and not(contains(@resource-id, 'actionbar')) and not(contains(@resource-id, 'back')) and not(contains(@resource-id, 'Like'))]/.."
     };
 
     public static final String[] TAB_LIST = {

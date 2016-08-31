@@ -2,18 +2,24 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Appium Test" duration-ms="1399867" started-at="2016-08-25T17:51:07Z" finished-at="2016-08-25T18:14:27Z">
+  <suite name="MyTestSuite" duration-ms="8633" started-at="2016-08-30T01:28:36Z" finished-at="2016-08-30T01:28:45Z">
     <groups>
     </groups>
-    <test name="Appium Test 1" duration-ms="1399867" started-at="2016-08-25T17:51:07Z" finished-at="2016-08-25T18:14:27Z">
+    <test name="MyTests" duration-ms="8633" started-at="2016-08-30T01:28:36Z" finished-at="2016-08-30T01:28:45Z">
       <class name="com.xpower.appiumtestdemo.GameBoxTest">
-        <test-method status="PASS" signature="setUp()" name="setUp" is-config="true" duration-ms="26624" started-at="2016-08-25T17:50:40Z" finished-at="2016-08-25T17:51:07Z">
-        </test-method>
-        <test-method status="PASS" signature="testAll()" name="testAll" duration-ms="1399392" started-at="2016-08-25T17:51:07Z" finished-at="2016-08-25T18:14:26Z">
-        </test-method>
-        <test-method status="PASS" signature="tearDown()" name="tearDown" is-config="true" duration-ms="3026" started-at="2016-08-25T18:14:27Z" finished-at="2016-08-25T18:14:30Z">
-        </test-method>
-      </class>
-    </test>
-  </suite>
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.xpower.appiumtestdemo.GameBoxTest@5a99da]" name="setUp" is-config="true" duration-ms="10081" started-at="2016-08-30T09:28:26Z" finished-at="2016-08-30T09:28:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="testAll()[pri:0, instance:com.xpower.appiumtestdemo.GameBoxTest@5a99da]" name="testAll" duration-ms="8481" started-at="2016-08-30T09:28:36Z" finished-at="2016-08-30T09:28:45Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAll -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.xpower.appiumtestdemo.GameBoxTest@5a99da]" name="tearDown" is-config="true" duration-ms="1814" started-at="2016-08-30T09:28:45Z" finished-at="2016-08-30T09:28:47Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.xpower.appiumtestdemo.GameBoxTest -->
+    </test> <!-- MyTests -->
+  </suite> <!-- MyTestSuite -->
 </testng-results>

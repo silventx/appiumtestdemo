@@ -1,7 +1,9 @@
 package com.xpower.appiumtestdemo;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
+//import org.junit.Assert;
+//import org.junit.BeforeClass;
+import com.xpower.appiumtestdemo.util.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

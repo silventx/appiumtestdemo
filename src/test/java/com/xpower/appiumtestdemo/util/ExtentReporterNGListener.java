@@ -66,7 +66,6 @@ public class ExtentReporterNGListener implements IReporter{
                 if (result.getThrowable() != null) {
                     test.log(status, test.addScreenCapture("../img/"+result.getMethod().getMethodName()+".png"));
                     test.log(status, result.getThrowable());
-
                 }
                 else {
                     test.log(status, "Test " + status.toString().toLowerCase() + "ed");

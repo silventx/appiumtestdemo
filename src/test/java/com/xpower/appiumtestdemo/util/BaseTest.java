@@ -2,6 +2,7 @@ package com.xpower.appiumtestdemo.util;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ReporterType;
+import com.xpower.appiumtestdemo.Config;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileBrowserType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -38,7 +39,8 @@ public class BaseTest {
         capabilities.setCapability("deviceName","Android");
         capabilities.setCapability("platformVersion", "4.4");
         //if no need install don't add this
-        capabilities.setCapability("app", app.getAbsolutePath());
+//        capabilities.setCapability("app", app.getAbsolutePath());
+        capabilities.setCapability("app", Config.APP_PATH);
         capabilities.setCapability("appPackage", "com.m4399.gamecenter");
         //support Chinese
         capabilities.setCapability("unicodeKeyboard" ,"True");
@@ -48,6 +50,8 @@ public class BaseTest {
 
 //        capabilities.setCapability("appActivity", ".ui.activity.GuideActivity");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+
+        System.out.println("driver created!");
 
         Helper.init(driver);
     }
@@ -60,8 +64,8 @@ public class BaseTest {
     }
 
     public void initExtentReports() {
-        reports = new ExtentReports(REPORT_LOCATION, true);
-        reports.startReporter(ReporterType.DB, REPORT_LOCATION);
+        reports = new ExtentReports(Config.REPORT_PATH + "//ExtentReports.html", true);
+        reports.startReporter(ReporterType.DB, Config.REPORT_PATH + "//ExtentReports.html");
         reports.addSystemInfo("Host Name", "xudiwen");
     }
 

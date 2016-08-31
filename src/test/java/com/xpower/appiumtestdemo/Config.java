@@ -1,5 +1,6 @@
 package com.xpower.appiumtestdemo;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,11 @@ import java.util.List;
  * Created by 4399-3040 on 2016/8/4.
  */
 public class Config {
+
+    public static String APP_PATH = System.getProperty("user.dir") + "//4399.apk";
+    public static String CONFIG_PATH = System.getProperty("user.dir") + "//config.json";
+    public static String REPORT_PATH = System.getProperty("usr.dir") + "//report";
+    public static String IMG_PATH = System.getProperty("user.dir") + "//img";
 
     public static final String LOGIN_WRONG_USERNAME = "123";
     public static final String LOGIN_WRONG_PASSWORD = "123";
@@ -37,14 +43,14 @@ public class Config {
 //    public static final String RULE_ADIMAGE = "com.m4399.gamecenter:id/adImageView";
 //    public static final String RULE_ITEM = "com.m4399.gamecenter:id/itemTextView";
 
-    public static final String[] ITERATOR_LIST = {
+    public static  String[] ITERATOR_LIST = {
             "//android.widget.LinearLayout[@clickable='true' and not(contains(@resource-id, 'Download')) and not(contains(@resource-id, 'hotWordText')) and not(contains(@resource-id, 'Comment')) and not(contains(@resource-id, 'Like')) and not(contains(@resource-id, 'Forward'))]",
             "//android.widget.FrameLayout[@clickable='true' and not(contains(@resource-id, 'Download')) and not(contains(@resource-id, 'btn_game_action'))]",
             "//android.widget.ImageView[@clickable='true' and not(contains(@resource-id, 'screenshot'))]",
             "//android.widget.RelativeLayout[@clickable='true'  and not(contains(@resource-id, 'parentView'))]//android.widget.TextView[not(contains(@resource-id, 'tab')) and not(contains(@resource-id, 'item')) and not(contains(@resource-id, 'actionbar')) and not(contains(@resource-id, 'back')) and not(contains(@resource-id, 'Like'))]/.."
     };
 
-    public static final String[] TAB_LIST = {
+    public static  String[] TAB_LIST = {
             "//android.widget.RelativeLayout[@clickable='true']//android.widget.TextView[contains(@resource-id, 'tab')]/..",
             "com.m4399.gamecenter:id/itemTextView"
     };

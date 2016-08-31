@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Appium Test]">
+<suite name="Failed suite [MyTestSuite]">
   <listeners>
     <listener class-name="com.xpower.appiumtestdemo.util.TestNGListener"/>
     <listener class-name="com.xpower.appiumtestdemo.util.ExtentReporterNGListener"/>
   </listeners>
-  <test name="Appium Test 1(failed)" preserve-order="false">
+  <test name="MyTests">
     <classes>
-      <class name="com.xpower.appiumtestdemo.GameBoxTest">
-        <methods>
-          <include name="setUp"/>
-          <include name="testAll"/>
-          <include name="tearDown"/>
-        </methods>
-      </class>
+      <class name="com.xpower.appiumtestdemo.GameBoxTest"/>
     </classes>
-  </test>
-</suite>
+  </test> <!-- MyTests -->
+</suite> <!-- Failed suite [MyTestSuite] -->

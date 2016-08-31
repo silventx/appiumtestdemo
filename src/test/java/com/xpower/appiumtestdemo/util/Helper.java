@@ -9,7 +9,6 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.xpower.appiumtestdemo.model.ActivityIterator;
 import io.appium.java_client.android.AndroidDriver;
 import net.sourceforge.htmlunit.corejs.javascript.ast.Loop;
-import org.json.simple.JSONObject;
 import org.jsoup.select.Evaluator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -234,26 +233,26 @@ public class Helper {
             e.printStackTrace();
         }
     }
-    public static JSONObject getConfig() {
-        Gson gson = new Gson();
-        JSONObject object = null;
-        JsonParser jsonParser = new JsonParser();
-        String content = null;
-        StringBuilder sb = new StringBuilder();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("F:\\st_work\\appcrawler\\myconfig.json")));
-            while ((content = br.readLine()) != null) {
-                System.out.println(content);
-                sb.append(content);
-            }
-            br.close();
-            JsonElement jsonElement = jsonParser.parse(sb.toString());
-            JsonObject object1 = jsonElement.getAsJsonObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return object;
-    }
+//    public static JSONObject getConfig() {
+//        Gson gson = new Gson();
+//        JSONObject object = null;
+//        JsonParser jsonParser = new JsonParser();
+//        String content = null;
+//        StringBuilder sb = new StringBuilder();
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(new File("F:\\st_work\\appcrawler\\myconfig.json")));
+//            while ((content = br.readLine()) != null) {
+//                System.out.println(content);
+//                sb.append(content);
+//            }
+//            br.close();
+//            JsonElement jsonElement = jsonParser.parse(sb.toString());
+//            JsonObject object1 = jsonElement.getAsJsonObject();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return object;
+//    }
 
     public boolean hasChecked(String activityName) {
         for (int i = ActivityIterator.checkedList.size() - 1; i > 0; i--) {

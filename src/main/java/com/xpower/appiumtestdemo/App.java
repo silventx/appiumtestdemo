@@ -117,9 +117,21 @@ public class App
             String appPath = cmd.getOptionValue("a");
             String reportPath = cmd.getOptionValue("r");
             String configPath = cmd.getOptionValue("c");
-            parameters.put("appPath", appPath);
-            parameters.put("reportPath", reportPath);
-            parameters.put("configPath", configPath);
+            if (appPath != null) {
+                parameters.put("appPath", appPath);
+            } else {
+                parameters.put("appPath", "default");
+            }
+            if (reportPath != null) {
+                parameters.put("reportPath", reportPath);
+            } else {
+                parameters.put("reportPath", "default");
+            }
+            if (configPath != null) {
+                parameters.put("configPath", configPath);
+            } else {
+                parameters.put("configPath", "default");
+            }
 
         } catch (ParseException e) {
             formatter.printHelp("ERROR", options, true);

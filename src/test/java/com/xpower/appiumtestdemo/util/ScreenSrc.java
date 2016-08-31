@@ -16,6 +16,8 @@ public class ScreenSrc {
 
         String cyrPatn=System.getProperty("user.dir");
 
+        System.out.print(cyrPatn);
+
         File scrfile=driver.getScreenshotAs(OutputType.FILE);
 
         try {

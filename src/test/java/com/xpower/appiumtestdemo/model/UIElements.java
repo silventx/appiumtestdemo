@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 同一类控件的抽象类
  * Created by 4399-3040 on 2016/8/18.
  */
 public class UIElements {

@@ -44,7 +44,7 @@ public class GameBoxTest extends BaseTest {
     @Test
     public void testAll() {
         doPrevious();
-//        new ActivityIterator(new UIActivity(null)).run();
+        new ActivityIterator(new UIActivity(null)).run();
     }
 
     private void doPrevious() {

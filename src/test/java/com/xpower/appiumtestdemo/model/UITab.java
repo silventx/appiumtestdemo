@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 /**
+ * 对每个Tab页的遍历
  * Created by 4399-3040 on 2016/8/9.
  */
 public class UITab extends Helper{

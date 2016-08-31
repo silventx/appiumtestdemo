@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Appium帮助类
  * Created by 4399-3040 on 2016/8/4.
  */
 public class Helper {

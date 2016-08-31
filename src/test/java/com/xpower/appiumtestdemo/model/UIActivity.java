@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 对遍历Activity的了逻辑操作，不负责具体的遍历流程
  * Created by 4399-3040 on 2016/8/9.
  */
 public class UIActivity extends Helper{

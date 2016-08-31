@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 /**
+ * Activity遍历栈
  * Created by 4399-3040 on 2016/8/11.
  */
 public class ActivityStack {

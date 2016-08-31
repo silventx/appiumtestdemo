@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 普通控件集合
  * Created by 4399-3040 on 2016/8/11.
  */
 public class ElementSet extends Helper {

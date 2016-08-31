@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 负责整个遍历流程
  * Created by 4399-3040 on 2016/8/9.
  */
 public class ActivityIterator {

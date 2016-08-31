@@ -78,7 +78,7 @@ public class FileLoader {
     }
 
     private String[] jsonArray2Strings(JsonArray array) {
-        String[] strings = null;
+        String[] strings = new String[array.size()];
         for (int i = 0; i < array.size(); i++) {
             strings[i] = array.get(i).getAsString();
         }

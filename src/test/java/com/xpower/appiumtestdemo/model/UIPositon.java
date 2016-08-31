@@ -3,6 +3,7 @@ package com.xpower.appiumtestdemo.model;
 import com.xpower.appiumtestdemo.Config;
 
 /**
+ * 当前页面遍历位置
  * Created by 4399-3040 on 2016/8/9.
  */
 public class UIPositon {

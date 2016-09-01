@@ -4,11 +4,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.xpower.appiumtestdemo.Config;
+import org.apache.xalan.transformer.KeyIterator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import java.io.*;
+
+import static com.xpower.appiumtestdemo.util.Helper.*;
 
 /**
  * 用来读取外部配置文件
@@ -42,7 +47,7 @@ public class FileLoader {
             System.out.println("读取文件:" + path);
             try {
                 String line = null;
-                BufferedReader br = new BufferedReader(new FileReader(file));
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8")); //若不指定字符集，将会使用系统默认字符集，导致中文乱码
                 while ((line = br.readLine()) != null) {
                     System.out.println(line);
                     sb.append(line);
@@ -62,19 +67,77 @@ public class FileLoader {
     public void loadConfig() {
         JsonObject object = getContent();
 
-        System.out.println("get iterator");
-        JsonArray iteratorArray = object.getAsJsonArray(KEY_ITERATOR_LIST);
-        Config.ITERATOR_LIST = jsonArray2Strings(iteratorArray);
-        System.out.println("got it");
+        if (object.has(KEY_ITERATOR_LIST)) {
+            System.out.println("get iterator");
+            JsonArray iteratorArray = object.getAsJsonArray(KEY_ITERATOR_LIST);
+            Config.ITERATOR_LIST = jsonArray2Strings(iteratorArray);
+            System.out.println("got it");
+        }
+        if (object.has(KEY_TAB_LIST)) {
+            System.out.println("get tab");
+            JsonArray tabArray = object.getAsJsonArray(KEY_TAB_LIST);
+            Config.TAB_LIST = jsonArray2Strings(tabArray);
+            System.out.println("got it");
+        }
+//        System.out.println(jsonArray2Strings(iteratorArray)[0] + "\n" + jsonArray2Strings(tabArray)[0]);
+        if (object.has(KEY_STARTUP_ACTIONS)) {
+            System.out.println("get startupacitons");
+            JsonArray actions = object.getAsJsonArray(KEY_STARTUP_ACTIONS);
+            System.out.println("got it size:" + actions.size());
 
-        System.out.println("get tab");
-        JsonArray tabArray = object.getAsJsonArray(KEY_TAB_LIST);
-        Config.TAB_LIST = jsonArray2Strings(tabArray);
-        System.out.println("got it");
+            JsonObject obj;
+            if (actions != null) {
+                for (int i = 0; i < actions.size(); i++) {
+                    obj = actions.get(i).getAsJsonObject();
+                    String action = obj.get("action").getAsString();
+                    String element = obj.get("element").getAsString();
 
-        System.out.println(jsonArray2Strings(iteratorArray)[0] + "\n" + jsonArray2Strings(tabArray)[0]);
+                    System.out.println("action:" + action + " element:" + element);
 
+                    WebElement webElement = null;
+                    if (element != null && !element.equals("")) {
+                        int type = Helper.getLcatorType(element);
+                        switch (type) {
+                            case Config.LOCATOR_TYPE_ID:
+                                webElement = Helper.element_id(element);
+                                System.out.println("type: " + Config.LOCATOR_TYPE_ID);
+                                break;
+                            case Config.LOCATOR_TYPE_NAME:
+                                webElement = Helper.element_name(element);
+                                System.out.println("type: " + Config.LOCATOR_TYPE_NAME);
+                                break;
+                            case Config.LOCATOR_TYPE_XPATH:
+                                webElement = Helper.element_xpath(element);
+                                System.out.println("type: " + Config.LOCATOR_TYPE_XPATH);
+                                break;
+                        }
+                    }
 
+                    if (action.equals("click")) {
+                        webElement.click();
+                    } else if (action.equals("sendKeys")) {
+                        String data = obj.get("data").getAsString();
+                        webElement.sendKeys(data);
+                    } else if (action.equals("switchToNative")) {
+                        switchToNative();
+                    } else if (action.equals("switchToWebView")) {
+                        switchToWebView(); //切换到WebView Context
+                        setWait(4);
+                        System.out.println(driver.getPageSource());
+                    } else if (action.equals("waitFor")) {
+                        waitFor(webElement);
+                    }
+
+                    if (i < actions.size() - 1) {
+                        String nextElement = actions.get(i + 1).getAsJsonObject().get("element").getAsString();
+                        System.out.println("wait for:" + nextElement);
+                        if (nextElement != null && !nextElement.equals("")) {
+                            waitFor(nextElement); //等待下一个element加载出来后再进行点击
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private String[] jsonArray2Strings(JsonArray array) {

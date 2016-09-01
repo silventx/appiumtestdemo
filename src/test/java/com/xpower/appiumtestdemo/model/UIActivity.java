@@ -108,7 +108,6 @@ public class UIActivity extends Helper{
             }
 //            back();
             System.out.println("pop: "  + ActivityIterator.stack.getTop().getActivityName() + " current stack size: " + ActivityIterator.stack.size());
-            writeLog("pop: "  + ActivityIterator.stack.getTop() + " current stack size: " + ActivityIterator.stack.size());
             ActivityIterator.stack.pop();
 
             extentTest.log(LogStatus.PASS, "Pass");

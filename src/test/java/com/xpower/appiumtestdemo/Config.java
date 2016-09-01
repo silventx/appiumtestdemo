@@ -11,8 +11,13 @@ public class Config {
 
     public static String APP_PATH = System.getProperty("user.dir") + "//4399.apk";
     public static String CONFIG_PATH = System.getProperty("user.dir") + "//config.json";
-    public static String REPORT_PATH = System.getProperty("usr.dir") + "//report";
-    public static String IMG_PATH = System.getProperty("user.dir") + "//img";
+    public static String REPORT_PATH = "report";
+    public static String IMG_PATH = "img";
+
+    public static final int LOCATOR_TYPE_ID = 0;
+    public static final int LOCATOR_TYPE_NAME = 1;
+    public static final int LOCATOR_TYPE_XPATH = 2;
+    public static final int LOCATOR_TYPE_CLASS = 3;
 
     public static final String LOGIN_WRONG_USERNAME = "123";
     public static final String LOGIN_WRONG_PASSWORD = "123";

@@ -34,16 +34,17 @@ public class GameBoxTest extends BaseTest {
         }
         if (!reportPath.equals("default")) {
             Config.REPORT_PATH = reportPath;
-            System.out.println("get r:" +reportPath);
+            System.out.println("get r:" + reportPath);
         }
-        FileLoader fileLoader = new FileLoader(Config.CONFIG_PATH);
-   //     System.out.println("get content: " + fileLoader.getContent().toString());
-        fileLoader.loadConfig();
+
     }
 
     @Test
     public void testAll() {
-        doPrevious();
+        FileLoader fileLoader = new FileLoader(Config.CONFIG_PATH);
+        //     System.out.println("get content: " + fileLoader.getContent().toString());
+        fileLoader.loadConfig();
+//        doPrevious();
         new ActivityIterator(new UIActivity(null)).run();
     }
 
@@ -51,24 +52,24 @@ public class GameBoxTest extends BaseTest {
         element_id("com.m4399.gamecenter:id/tv_skip").click();
         element_name("我").click();
         element_id("com.m4399.gamecenter:id/btn_login").click();
-        Assert.assertTrue(element_id("com.m4399.gamecenter:id/ll_login_weibo").isDisplayed());
-//        element_id("com.m4399.gamecenter:id/ll_login_weibo").click();
-//        getCurrentActivity();
-//        Set<String> contextNames = driver.getContextHandles();
-//        for (String contextName : contextNames) {
-//            System.out.println(contextNames); //prints out something like [NATIVE_APP, WEBVIEW_<APP_PKG_NAME>]
-//        }
-//        switchToWebView(); //切换到WebView Context
-//        setWait(4);
-//        System.out.println(driver.getPageSource());
-//
-//        element_id("userId").sendKeys(Config.WEIBO_USERNAME);
-//        element_id("passwd").sendKeys(Config.WEIBO_PASSWORD);
-//        element_classname("btnP").click();
-//        switchToNative();
-//
-//        waitFor(By.name("找游戏"));
-//        element_name("找游戏").click();
+//        Assert.assertTrue(element_id("com.m4399.gamecenter:id/ll_login_weibo").isDisplayed());
+        element_id("com.m4399.gamecenter:id/ll_login_weibo").click();
+        getCurrentActivity();
+        Set<String> contextNames = driver.getContextHandles();
+        for (String contextName : contextNames) {
+            System.out.println(contextNames); //prints out something like [NATIVE_APP, WEBVIEW_<APP_PKG_NAME>]
+        }
+        switchToWebView(); //切换到WebView Context
+        setWait(4);
+        System.out.println(driver.getPageSource());
+
+        element_id("userId").sendKeys(Config.WEIBO_USERNAME);
+        element_id("passwd").sendKeys(Config.WEIBO_PASSWORD);
+        element_classname("btnP").click();
+        switchToNative();
+
+        waitFor(By.name("找游戏"));
+        element_name("找游戏").click();
     }
 
 //        WebElement skipButton = element_id("com.m4399.gamecenter:id/tv_skip");

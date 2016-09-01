@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import com.xpower.appiumtestdemo.Config;
 import com.xpower.appiumtestdemo.model.ActivityIterator;
 import io.appium.java_client.android.AndroidDriver;
 import net.sourceforge.htmlunit.corejs.javascript.ast.Loop;
@@ -33,7 +34,7 @@ public class Helper {
 
     public static void init(AndroidDriver webDriver) {
         driver = webDriver;
-        int timeoutInSec = 60;
+        int timeoutInSec = 10; //等待控件加载的Timeout
         driverWait = new WebDriverWait(webDriver, timeoutInSec);
     }
 
@@ -127,6 +128,24 @@ public class Helper {
 
     public static void waitFor(By locator) {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public static void waitFor(WebElement element) {
+        driverWait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static void waitFor(String element) {
+        switch (getLcatorType(element)) {
+            case Config.LOCATOR_TYPE_ID:
+                waitFor(By.id(element));
+                break;
+            case Config.LOCATOR_TYPE_NAME:
+                waitFor(By.name(element));
+                break;
+            case Config.LOCATOR_TYPE_XPATH:
+                waitFor(By.xpath(element));
+                break;
+        }
     }
 
     public static void waitFor(By locator, int sec) {
@@ -264,15 +283,15 @@ public class Helper {
         return false;
     }
 
-    public void writeLog(String str) {
-        try {
-            File file = new File(System.getProperty("user.dir") + "\\log\\stacktrace.txt");
-            BufferedWriter br = new BufferedWriter(new FileWriter(file));
-            br.write(str + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void writeLog(String str) {
+//        try {
+//            File file = new File(System.getProperty("user.dir") + "\\log\\stacktrace.txt");
+//            BufferedWriter br = new BufferedWriter(new FileWriter(file));
+//            br.write(str + "\n");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //获得当前屏幕的截图
     public void snapShot(ExtentTest test, String description) {
@@ -285,6 +304,19 @@ public class Helper {
             } else {
                 test.log(LogStatus.INFO, "Snapshot", "SnapShot:" + img);
             }
+        }
+    }
+
+    //判断用来定位控件的locator是根据name id还是xpath
+    public static int getLcatorType(String locator) {
+        if (locator.contains(":")) {
+            return Config.LOCATOR_TYPE_ID;
+        } else if (locator.contains("//")) {
+            return Config.LOCATOR_TYPE_XPATH;
+        } else if (locator.equals("btnP")) {
+            return Config.LOCATOR_TYPE_CLASS;
+        } else {
+            return Config.LOCATOR_TYPE_NAME;
         }
     }
 

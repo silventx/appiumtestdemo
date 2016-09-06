@@ -81,9 +81,7 @@ public class App
         suites.add(suite);
         testng.setXmlSuites(suites);
 
-
         testng.run();
-
 
         System.out.println(new App().sayHello());
     }

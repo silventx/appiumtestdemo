@@ -4,6 +4,7 @@ import com.xpower.appiumtestdemo.model.ActivityIterator;
 import com.xpower.appiumtestdemo.model.UIActivity;
 import com.xpower.appiumtestdemo.util.BaseTest;
 import com.xpower.appiumtestdemo.util.FileLoader;
+import com.xpower.appiumtestdemo.util.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -20,9 +21,13 @@ import static com.xpower.appiumtestdemo.util.Helper.*;
 
 public class GameBoxTest extends BaseTest {
 
-    @BeforeTest
+    @BeforeSuite
     @Parameters({"appPath", "configPath", "reportPath"})
-    public void init(String appPath, String configPath, String reportPath) {
+    @Override
+    public void setUp(String appPath, String configPath, String reportPath) throws Exception {
+
+        System.out.println("game box test");
+
         System.out.println(appPath + configPath + reportPath);
         if (!appPath.equals("default")) {
             Config.APP_PATH = appPath;
@@ -36,15 +41,35 @@ public class GameBoxTest extends BaseTest {
             Config.REPORT_PATH = reportPath;
             System.out.println("get r:" + reportPath);
         }
-
+        super.setUp(appPath, configPath, reportPath);
     }
+
+//    @BeforeSuite
+//    @Parameters({"appPath", "configPath", "reportPath"})
+//    public void init(String appPath, String configPath, String reportPath) {
+//        System.out.println(appPath + configPath + reportPath);
+//        if (!appPath.equals("default")) {
+//            Config.APP_PATH = appPath;
+//            System.out.println("get a:" +appPath);
+//        }
+//        if (!configPath .equals("default")) {
+//            Config.CONFIG_PATH = configPath;
+//            System.out.println("get c:" +configPath);
+//        }
+//        if (!reportPath.equals("default")) {
+//            Config.REPORT_PATH = reportPath;
+//            System.out.println("get r:" + reportPath);
+//        }
+//
+//    }
 
     @Test
     public void testAll() {
         FileLoader fileLoader = new FileLoader(Config.CONFIG_PATH);
-        //     System.out.println("get content: " + fileLoader.getContent().toString());
         fileLoader.loadConfig();
-//        doPrevious();
+
+        //doPrevious();
+        detectDialog(); //判断是否弹出更新窗口。
         new ActivityIterator(new UIActivity(null)).run();
     }
 

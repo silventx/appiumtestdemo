@@ -28,6 +28,10 @@ public class FileLoader {
     public static final String KEY_TAB_LIST = "tabList";
     public static final String KEY_BLACK_LIST = "blackList";
     public static final String KEY_STARTUP_ACTIONS = "startupActions";
+//    public static final String KEY_SCROLL_UP = "scrollUp";
+//    public static final String KEY_SCROLL_DOWM = "scrollDown";
+//    public static final String KEY_SCROLL_LEFT = "scrollLeft";
+//    public static final String KEY_SCROLL_RIGHT = "scrollRight";
 
     public FileLoader(String path) {
         this.path = path;
@@ -79,8 +83,16 @@ public class FileLoader {
             Config.TAB_LIST = jsonArray2Strings(tabArray);
             System.out.println("got it");
         }
+//        if (object.has(KEY_BLACK_LIST)) {
+//            System.out.println("get black");
+//            JsonArray blackArray = object.getAsJsonArray(KEY_BLACK_LIST);
+//            Config.BLACK_LIST = jsonArray2Strings(blackArray);
+//            constructList(blackArray);
+//            System.out.println("got it");
+//        }
+
 //        System.out.println(jsonArray2Strings(iteratorArray)[0] + "\n" + jsonArray2Strings(tabArray)[0]);
-        if (object.has(KEY_STARTUP_ACTIONS)) {
+        if (object.has(KEY_STARTUP_ACTIONS)) { //读取遍历前自定义操作，并进行解析
             System.out.println("get startupacitons");
             JsonArray actions = object.getAsJsonArray(KEY_STARTUP_ACTIONS);
             System.out.println("got it size:" + actions.size());
@@ -110,6 +122,10 @@ public class FileLoader {
                                 webElement = Helper.element_xpath(element);
                                 System.out.println("type: " + Config.LOCATOR_TYPE_XPATH);
                                 break;
+                            case Config.LOCATOR_TYPE_CLASS:
+                                webElement = Helper.element_classname(element);
+                                System.out.println("type: " + Config.LOCATOR_TYPE_CLASS);
+                                break;
                         }
                     }
 
@@ -126,13 +142,21 @@ public class FileLoader {
                         System.out.println(driver.getPageSource());
                     } else if (action.equals("waitFor")) {
                         waitFor(webElement);
+                    } else if (action.equals("scrollUp")) {
+                        swipe(getHeight() * 3 / 4, getWidth() / 2, getHeight() / 4, getWidth() / 2, 500);
+                    } else if (action.equals("scrollDown")) {
+                        swipe(getHeight() / 4, getWidth() / 2, getHeight() * 3 / 4, getWidth() / 2, 500);
+                    } else if (action.equals("scrollLeft")) {
+                        swipe(getHeight() / 2 , getWidth() * 3 / 4, getHeight() / 2, getWidth() / 4, 500);
+                    } else if (action.equals("scrollRight")) {
+                        swipe(getHeight() / 2, getWidth() / 4, getHeight() / 2, getWidth() * 3 / 4, 500);
                     }
 
                     if (i < actions.size() - 1) {
                         String nextElement = actions.get(i + 1).getAsJsonObject().get("element").getAsString();
-                        System.out.println("wait for:" + nextElement);
                         if (nextElement != null && !nextElement.equals("")) {
                             waitFor(nextElement); //等待下一个element加载出来后再进行点击
+                            System.out.println("wait for:" + nextElement);
                         }
                     }
                 }
@@ -146,6 +170,10 @@ public class FileLoader {
             strings[i] = array.get(i).getAsString();
         }
         return strings;
+    }
+
+    private void constructList(JsonArray blackArray) {
+
     }
 
 }

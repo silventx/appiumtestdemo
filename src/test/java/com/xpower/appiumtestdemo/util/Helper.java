@@ -21,6 +21,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -145,6 +146,9 @@ public class Helper {
             case Config.LOCATOR_TYPE_XPATH:
                 waitFor(By.xpath(element));
                 break;
+            case Config.LOCATOR_TYPE_CLASS:
+                waitFor(By.className(element));
+                break;
         }
     }
 
@@ -155,7 +159,7 @@ public class Helper {
     /**
      * 获得屏幕高度
      */
-    public static int getHeight() {
+    public static  int getHeight() {
         return driver.manage().window().getSize().height;
     }
 
@@ -167,14 +171,25 @@ public class Helper {
     }
 
     public static void switchToWebView() {
-        driver.context("WEBVIEW_com.m4399.gamecenter");
+        String context = null;
+        Set<String> contextNames = driver.getContextHandles();
+        for (String contextName : contextNames) {
+           if (contextName.contains("WEBVIEW")) { //Context中包含WEBVIEW字段的则为WebView的Context
+               System.out.println("find WebView context:" + contextName);
+               context = contextName;
+           }
+        }
+        if (context == null) {
+            System.out.println("Can't find WebView context");
+        }
+        driver.context(context);
     }
 
     public static void switchToNative() {
         driver.context("NATIVE_APP");
     }
 
-//    public static void clickAll() {
+//    public  void clickAll() {
 //        //获得当前页面所有可点击的Tag
 //        clickElements("//android.widget.TextView[contains(@resource-id, 'tag')]", "tag");
 //        clickElements("//android.widget.TextView[contains(@resource-id, 'title')]", "title");
@@ -239,42 +254,7 @@ public class Helper {
         return currentActivity;
     }
 
-    public static void  execCMD(final String cmd) {
-        String currentActivity = null;
-        try {
-            String line;
-            Process process = Runtime.getRuntime().exec(cmd);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-//    public static JSONObject getConfig() {
-//        Gson gson = new Gson();
-//        JSONObject object = null;
-//        JsonParser jsonParser = new JsonParser();
-//        String content = null;
-//        StringBuilder sb = new StringBuilder();
-//        try {
-//            BufferedReader br = new BufferedReader(new FileReader(new File("F:\\st_work\\appcrawler\\myconfig.json")));
-//            while ((content = br.readLine()) != null) {
-//                System.out.println(content);
-//                sb.append(content);
-//            }
-//            br.close();
-//            JsonElement jsonElement = jsonParser.parse(sb.toString());
-//            JsonObject object1 = jsonElement.getAsJsonObject();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return object;
-//    }
-
-    public boolean hasChecked(String activityName) {
+    public static boolean hasChecked(String activityName) {
         for (int i = ActivityIterator.checkedList.size() - 1; i > 0; i--) {
             if (activityName.equals(ActivityIterator.checkedList.get(i))) {
                 return true;
@@ -283,18 +263,9 @@ public class Helper {
         return false;
     }
 
-//    public void writeLog(String str) {
-//        try {
-//            File file = new File(System.getProperty("user.dir") + "\\log\\stacktrace.txt");
-//            BufferedWriter br = new BufferedWriter(new FileWriter(file));
-//            br.write(str + "\n");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     //获得当前屏幕的截图
-    public void snapShot(ExtentTest test, String description) {
+    public static void snapShot(ExtentTest test, String description) {
         String filename = Long.toString(System.currentTimeMillis());
         ScreenSrc.getScreen(driver, Long.toString(System.currentTimeMillis()));
         if (test != null) {
@@ -323,5 +294,11 @@ public class Helper {
     //判断是否弹出dialog
     public static boolean isDialogShown() {
         return elements(By.xpath("//android.widget.LinearLayout[contains(@resource-id, 'dialog')]")).size() != 0;
+    }
+
+    public static void detectDialog() {
+        if (elements(By.xpath("//*[contains(@resource-id, 'dialog')]")).size() != 0) {
+            back();
+        }
     }
 }

@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import java.io.File;
 import java.net.URL;
@@ -25,23 +26,26 @@ public class BaseTest {
     protected static ExtentReports reports;
 
     @BeforeSuite
-    public void setUp() throws Exception {
+    @Parameters({"appPath", "configPath", "reportPath"})
+    public void setUp(String appPath, String configPath, String reportPath)throws Exception {
+
+        System.out.println("base test");
 
         initExtentReports();
 
         // set up appium
-        File classpathRoot = new File(System.getProperty("user.dir"));
-        File appDir = new File(classpathRoot, "apps");
-        File app = new File(appDir, "4399.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.BROWSER_NAME, "");
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName","Android");
         capabilities.setCapability("platformVersion", "4.4");
         //if no need install don't add this
-//        capabilities.setCapability("app", app.getAbsolutePath());
-        capabilities.setCapability("app", Config.APP_PATH);
-        capabilities.setCapability("appPackage", "com.m4399.gamecenter");
+        if (appPath != null && !appPath.equals("default")) {
+            capabilities.setCapability("app", appPath);
+        } else {
+            capabilities.setCapability("app", Config.APP_PATH);
+        }
+//        capabilities.setCapability("appPackage", "com.m4399.gamecenter");
         //support Chinese
         capabilities.setCapability("unicodeKeyboard" ,"True");
         capabilities.setCapability("resetKeyboard", "True");

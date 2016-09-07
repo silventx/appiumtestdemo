@@ -4,11 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.xpower.appiumtestdemo.Config;
-import org.apache.xalan.transformer.KeyIterator;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.io.*;
@@ -107,30 +103,55 @@ public class FileLoader {
                     System.out.println("action:" + action + " element:" + element);
 
                     WebElement webElement = null;
-                    if (element != null && !element.equals("")) {
-                        int type = Helper.getLcatorType(element);
-                        switch (type) {
-                            case Config.LOCATOR_TYPE_ID:
-                                webElement = Helper.element_id(element);
-                                System.out.println("type: " + Config.LOCATOR_TYPE_ID);
-                                break;
-                            case Config.LOCATOR_TYPE_NAME:
-                                webElement = Helper.element_name(element);
-                                System.out.println("type: " + Config.LOCATOR_TYPE_NAME);
-                                break;
-                            case Config.LOCATOR_TYPE_XPATH:
-                                webElement = Helper.element_xpath(element);
-                                System.out.println("type: " + Config.LOCATOR_TYPE_XPATH);
-                                break;
-                            case Config.LOCATOR_TYPE_CLASS:
-                                webElement = Helper.element_classname(element);
-                                System.out.println("type: " + Config.LOCATOR_TYPE_CLASS);
-                                break;
+                    try {
+                        if (element != null && !element.equals("")) {
+                            webElement = element(element);
+                        }
+//                            int type = Helper.getLcatorType(element);
+//                            switch (type) {
+//                                case Config.LOCATOR_TYPE_ID:
+//                                    webElement = Helper.element_id(element);
+//                                    System.out.println("type: " + Config.LOCATOR_TYPE_ID);
+//                                    break;
+//                                case Config.LOCATOR_TYPE_NAME:
+//                                    webElement = Helper.element_name(element);
+//                                    System.out.println("type: " + Config.LOCATOR_TYPE_NAME);
+//                                    break;
+//                                case Config.LOCATOR_TYPE_XPATH:
+//                                    webElement = Helper.element_xpath(element);
+//                                    System.out.println("type: " + Config.LOCATOR_TYPE_XPATH);
+//                                    break;
+//                                case Config.LOCATOR_TYPE_CLASS:
+//                                    webElement = Helper.element_classname(element);
+//                                    System.out.println("type: " + Config.LOCATOR_TYPE_CLASS);
+//                                    break;
+//                            }
+//                        }
+                    } catch (NoSuchElementException e) {
+                        System.out.println("find NoSuchElementException");
+                        back();
+                        try {
+                            webElement = element(element);
+                        } catch (NoSuchElementException ee) {
+                            ee.printStackTrace();
                         }
                     }
 
+
                     if (action.equals("click")) {
-                        webElement.click();
+                        try {
+                            webElement.click();
+                        } catch (NoSuchElementException e) {
+                            System.out.println("find NoSuchElementException");
+                            back();
+                            try {
+                                webElement.click();
+                            } catch (NoSuchElementException ee) {
+                                ee.printStackTrace();
+                                System.out.println("still find NoSuchElementException");
+                            }
+                        }
+
                     } else if (action.equals("sendKeys")) {
                         String data = obj.get("data").getAsString();
                         webElement.sendKeys(data);
@@ -155,7 +176,12 @@ public class FileLoader {
                     if (i < actions.size() - 1) {
                         String nextElement = actions.get(i + 1).getAsJsonObject().get("element").getAsString();
                         if (nextElement != null && !nextElement.equals("")) {
-                            waitFor(nextElement); //等待下一个element加载出来后再进行点击
+                            try {
+                                waitFor(nextElement); //等待下一个element加载出来后再进行点击
+                            } catch (Exception e) {
+                                back();
+                                waitFor(nextElement);
+                            }
                             System.out.println("wait for:" + nextElement);
                         }
                     }
@@ -172,8 +198,5 @@ public class FileLoader {
         return strings;
     }
 
-    private void constructList(JsonArray blackArray) {
-
-    }
 
 }

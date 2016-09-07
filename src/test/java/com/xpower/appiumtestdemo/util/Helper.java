@@ -48,6 +48,26 @@ public class Helper {
         return driver.findElement(locator);
     }
 
+    //直接通过任意一种方式找到当前界面中的控件
+    public static WebElement element(String locator) {
+        WebElement webElement = null;
+        switch (getLcatorType(locator)) {
+            case Config.LOCATOR_TYPE_ID:
+                webElement = element_id(locator);
+                break;
+            case Config.LOCATOR_TYPE_NAME:
+                webElement = element_name(locator);
+                break;
+            case Config.LOCATOR_TYPE_XPATH:
+                webElement = element_xpath(locator);
+                break;
+            case Config.LOCATOR_TYPE_CLASS:
+                webElement = element_classname(locator);
+                break;
+        }
+        return webElement;
+    }
+
     public static WebElement element_id(String id) {
         return element(By.id(id));
     }
@@ -89,8 +109,12 @@ public class Helper {
     public static void goBack() {
         while (true) {
             back();
-            if (elements(By.xpath("//android.widget.LinearLayout[@resource-id='com.m4399.gamecenter:id/ll_dialog_content']")).size() != 0) { //返回时遇到dialog则点击确定
-                element_name("确定").click();
+            if (isDialogShown()) { //返回时遇到dialog则点击确定
+                try {
+                    element_name("取消").click();
+                } catch (Exception e) {
+                    back(); //若对话框没有取消按钮则直接按返回键关闭
+                }
             }
             if (ActivityIterator.stack.size() != 0 && getCurrentActivity().equals(ActivityIterator.stack.getTop().getActivityName())) {
                 System.out.println("back to: " + ActivityIterator.stack.getTop().getActivityName() + "success");
@@ -254,7 +278,7 @@ public class Helper {
         return currentActivity;
     }
 
-    public static boolean hasChecked(String activityName) {
+    public  boolean hasChecked(String activityName) {
         for (int i = ActivityIterator.checkedList.size() - 1; i > 0; i--) {
             if (activityName.equals(ActivityIterator.checkedList.get(i))) {
                 return true;
@@ -265,7 +289,7 @@ public class Helper {
 
 
     //获得当前屏幕的截图
-    public static void snapShot(ExtentTest test, String description) {
+    public  void snapShot(ExtentTest test, String description) {
         String filename = Long.toString(System.currentTimeMillis());
         ScreenSrc.getScreen(driver, Long.toString(System.currentTimeMillis()));
         if (test != null) {
@@ -297,7 +321,8 @@ public class Helper {
     }
 
     public static void detectDialog() {
-        if (elements(By.xpath("//*[contains(@resource-id, 'dialog')]")).size() != 0) {
+        if (elements(By.xpath("//*[contains(@resource-id, 'dialog')]")).size() > 0) {
+            System.out.println("detect dialog!");
             back();
         }
     }

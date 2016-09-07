@@ -9,17 +9,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 
-import org.openqa.selenium.interactions.internal.TouchAction;
-import org.testng.Assert;
+
 import org.testng.annotations.*;
 
-import java.io.File;
-import java.util.List;
 import java.util.Set;
 
 import static com.xpower.appiumtestdemo.util.Helper.*;
 
 public class GameBoxTest extends BaseTest {
+
+    public boolean hasApp = false, hasConfig = false, hasReport = false;
 
     @BeforeSuite
     @Parameters({"appPath", "configPath", "reportPath"})
@@ -32,14 +31,18 @@ public class GameBoxTest extends BaseTest {
         if (!appPath.equals("default")) {
             Config.APP_PATH = appPath;
             System.out.println("get a:" +appPath);
+            this.hasApp = true;
         }
         if (!configPath .equals("default")) {
             Config.CONFIG_PATH = configPath;
             System.out.println("get c:" +configPath);
+
+            this.hasConfig = true;
         }
         if (!reportPath.equals("default")) {
             Config.REPORT_PATH = reportPath;
             System.out.println("get r:" + reportPath);
+            this.hasReport = true;
         }
         super.setUp(appPath, configPath, reportPath);
     }
@@ -68,8 +71,8 @@ public class GameBoxTest extends BaseTest {
         FileLoader fileLoader = new FileLoader(Config.CONFIG_PATH);
         fileLoader.loadConfig();
 
-        //doPrevious();
-        detectDialog(); //判断是否弹出更新窗口。
+        System.out.println("load finished");
+        
         new ActivityIterator(new UIActivity(null)).run();
     }
 

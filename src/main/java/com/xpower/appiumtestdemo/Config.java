@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class Config {
 
-    public static String APP_PATH = System.getProperty("user.dir") + "//4399.apk";
-    public static String CONFIG_PATH = System.getProperty("user.dir") + "//config.json";
-    public static String REPORT_PATH = "report";
-    public static String IMG_PATH = "img";
+    public static final String APP_PATH = System.getProperty("user.dir") + "//4399.apk";
+    public static final String CONFIG_PATH = System.getProperty("user.dir") + "//config.json";
+    public static final String REPORT_PATH = "report";
+    public static final String IMG_PATH = "img";
 
     public static final int LOCATOR_TYPE_ID = 0;
     public static final int LOCATOR_TYPE_NAME = 1;

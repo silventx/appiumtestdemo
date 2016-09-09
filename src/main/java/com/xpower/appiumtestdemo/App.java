@@ -5,6 +5,7 @@ package com.xpower.appiumtestdemo;
 //import com.xpower.appiumtestdemo.util.ExtentReporterNGListener;
 //import com.xpower.appiumtestdemo.util.TestNGListener;
 
+import com.xpower.appiumtestdemo.util.ExtentReporterNGListener;
 import org.apache.commons.cli.*;
 import org.testng.TestNG;
 import org.testng.xml.XmlSuite;
@@ -55,12 +56,21 @@ public class App
 //        suites.add(new Environment().getPath());
 
 
+/*
         Map<String, String> params = initCLI(args);
+        System.out.println("appPath =====> " + params.get("appPath"));
+        System.out.println("testngPath =====> " + params.get("testngPath"));
+        System.out.println("configPath =====> " + params.get("configPath"));
+        System.out.println("reportPath =====> " + params.get("reportPath"));
+*/
 
+/*
         XmlSuite suite = new XmlSuite();
         suite.setName("MyTestSuite");
         suite.setListeners(Arrays.asList("com.xpower.appiumtestdemo.util.ExtentReporterNGListener"));
         suite.setFileName(params.get("testngPath"));
+*/
+
 /*
         List<XmlClass> classes = new ArrayList<XmlClass>();
         classes.add(new XmlClass("com.xpower.appiumtestdemo.GameBoxTest"));
@@ -69,13 +79,19 @@ public class App
         test.setXmlClasses(classes);
 */
 
+/*
         suite.setParameters(params);
 
         List<XmlSuite> suites = new ArrayList<XmlSuite>();
         suites.add(suite);
+*/
 
-
-        testng.setXmlSuites(suites);
+        List<String> suites = new ArrayList<String>();
+        suites.add(args[0]);//path to xml..
+        testng.setTestSuites(suites);
+        testng.setListenerClasses(Arrays.asList(new Class[] {
+                ExtentReporterNGListener.class
+        }));
 
         testng.run();
 

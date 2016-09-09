@@ -2,6 +2,7 @@ package com.xpower.appiumtestdemo.model;
 
 import com.xpower.appiumtestdemo.Config;
 import com.xpower.appiumtestdemo.util.Helper;
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -22,7 +23,8 @@ public class ElementSet extends Helper {
     private UIPositon positon;
 //    private UIPositon tabPosition;
 
-    public ElementSet() {
+    public ElementSet(AndroidDriver driver) {
+        super(driver);
 //        adImages = new ArrayList<UIElement>();
 //        tags = new ArrayList<UIElement>();
 //        titles = new ArrayList<UIElement>();
@@ -44,7 +46,7 @@ public class ElementSet extends Helper {
             System.out.println("find web view!!");
         } else {
             for (int i = 0; i < Config.ITERATOR_LIST.length; i++) {
-                UIElements uiElements = new UIElements(Config.ITERATOR_LIST[i]);
+                UIElements uiElements = new UIElements(Config.ITERATOR_LIST[i], this);
                 elementsMap.add(uiElements);
 //                uiElements.setElements(elements(By.xpath(uiElements.getRule())));
                 System.out.println(uiElements.getRule() + ":" + uiElements.getElements().size());

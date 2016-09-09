@@ -1,6 +1,8 @@
 package com.xpower.appiumtestdemo.util;
 
 import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.ReporterType;
 import com.xpower.appiumtestdemo.Config;
 import io.appium.java_client.android.AndroidDriver;
@@ -8,11 +10,11 @@ import io.appium.java_client.remote.MobileBrowserType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Parameters;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.URL;
 
 /**
@@ -20,25 +22,72 @@ import java.net.URL;
  */
 public class BaseTest {
 
-    private  AndroidDriver  driver;
+    protected AndroidDriver driver;
 
-    private static String REPORT_LOCATION = "report/ExtentReports.html";
-    protected static ExtentReports reports;
+//    private String REPORT_LOCATION = "report/ExtentReports.html";
+    protected ExtentReports reports;
 
-    @BeforeSuite
-    @Parameters({"appPath", "configPath", "reportPath"})
-    public void setUp(String appPath, String configPath, String reportPath)throws Exception {
+    private AppiumServerWrapper wrapper;
+    private ExtentTest extentTest;
+    public Helper helper;
+
+    @BeforeTest
+    @Parameters({"appPath", "configPath", "reportPath", "port", "udid"})
+    public void setUp(@Optional("default") String appPath, @Optional("default") String configPath, @Optional("default") String reportPath, @Optional("4723") String port, @Optional("default") String udid)throws Exception {
 
         System.out.println("base test");
 
-        initExtentReports();
+        initAppiumServer(port, udid);
+        initExtentReports(udid);
+        setUpAppium(appPath, port, udid);
+    }
 
+    @BeforeMethod
+    public void beforeMethod(Method method) {
+        System.out.println("xxxxxxxxxxxxxx" + method.getName());
+        extentTest = reports.startTest(method.getName());
+//        extentTest = reports.startTest("test_test");
+    }
+
+    @AfterMethod
+    public void AfterMethod(ITestResult result) throws Exception {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            extentTest.log(LogStatus.FAIL, result.getThrowable());
+        } else if (result.getStatus() == ITestResult.SKIP) {
+            extentTest.log(LogStatus.SKIP, "Test skipped " + result.getThrowable());
+        } else {
+            extentTest.log(LogStatus.PASS, "Test passed");
+        }
+//        reports.flush();
+    }
+
+    @AfterTest(alwaysRun = true)
+    public void tearDown() throws Exception {
+        driver.quit();
+        wrapper.stopAppiumServer();
+        reports.endTest(extentTest);
+        closeExtentReports();
+    }
+
+    private void initAppiumServer(String port, String udid) {
+        wrapper = new AppiumServerWrapper(port, udid);
+        wrapper.startAppiumServer();
+    }
+
+    private String formateUdid(String udid) {
+        return udid.replace(":", "_");
+    }
+
+    private void setUpAppium(String appPath, String port, String udid) throws Exception{
         // set up appium
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.BROWSER_NAME, "");
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName","Android");
         capabilities.setCapability("platformVersion", "4.4");
+        if (!udid.equalsIgnoreCase("default")) {
+            capabilities.setCapability("udid",udid);
+        }
         //if no need install don't add this
         if (appPath != null && !appPath.equals("default")) {
             capabilities.setCapability("app", appPath);
@@ -53,33 +102,38 @@ public class BaseTest {
         capabilities.setCapability("noSign", "True");
 
 //        capabilities.setCapability("appActivity", ".ui.activity.GuideActivity");
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new AndroidDriver(new URL("http://127.0.0.1:" + port + "/wd/hub"), capabilities);
 
         System.out.println("driver created!");
 
-        Helper.init(driver);
+        helper = new Helper(driver);
     }
 
-    @AfterSuite(alwaysRun=true)
-    public void tearDown() throws Exception {
-        driver.quit();
-
-        closeExtentReports();
-    }
-
-    public void initExtentReports() {
-        reports = new ExtentReports(Config.REPORT_PATH + "//ExtentReports.html", true);
-        reports.startReporter(ReporterType.DB, Config.REPORT_PATH + "//ExtentReports.html");
-        reports.addSystemInfo("Host Name", "xudiwen");
+    public void initExtentReports(String udid) {
+        String formatedUdid = formateUdid(udid);
+        String location = Config.REPORT_PATH + "/" + formatedUdid + "_Report.html";
+        reports = new ExtentReports(location, true);
+//        reports.startReporter(ReporterType.DB, Config.REPORT_PATH + "//ExtentReports.html");
+        reports.addSystemInfo("Host Name", "mobi4399");
+        reports.addSystemInfo("UDID", udid);
     }
 
 
     public void closeExtentReports() {
-        reports.close();
+//        reports.close();
+        reports.flush();
     }
 
-    public static ExtentReports getExtent() {
+    public ExtentReports getExtent() {
         return reports;
+    }
+
+    public Helper getHelper() {
+        return helper;
+    }
+
+    public AndroidDriver getDriver() {
+        return driver;
     }
 
     public  void takescreen(String filename){

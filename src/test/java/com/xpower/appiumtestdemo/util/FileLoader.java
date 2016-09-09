@@ -23,6 +23,7 @@ public class FileLoader {
 
     private String path = null;
     private String content = null;
+    private Helper helper;
 
     public static final String KEY_ITERATOR_LIST = "iteratorList";
     public static final String KEY_TAB_LIST = "tabList";
@@ -33,9 +34,10 @@ public class FileLoader {
 //    public static final String KEY_SCROLL_LEFT = "scrollLeft";
 //    public static final String KEY_SCROLL_RIGHT = "scrollRight";
 
-    public FileLoader(String path) {
+    public FileLoader(String path, Helper helper) {
         this.path = path;
         this.content = null;
+        this.helper = helper;
     }
 
     public JsonObject getContent() {
@@ -108,22 +110,22 @@ public class FileLoader {
 
                     WebElement webElement = null;
                     if (element != null && !element.equals("")) {
-                        int type = Helper.getLcatorType(element);
+                        int type = helper.getLcatorType(element);
                         switch (type) {
                             case Config.LOCATOR_TYPE_ID:
-                                webElement = Helper.element_id(element);
+                                webElement = helper.element_id(element);
                                 System.out.println("type: " + Config.LOCATOR_TYPE_ID);
                                 break;
                             case Config.LOCATOR_TYPE_NAME:
-                                webElement = Helper.element_name(element);
+                                webElement = helper.element_name(element);
                                 System.out.println("type: " + Config.LOCATOR_TYPE_NAME);
                                 break;
                             case Config.LOCATOR_TYPE_XPATH:
-                                webElement = Helper.element_xpath(element);
+                                webElement = helper.element_xpath(element);
                                 System.out.println("type: " + Config.LOCATOR_TYPE_XPATH);
                                 break;
                             case Config.LOCATOR_TYPE_CLASS:
-                                webElement = Helper.element_classname(element);
+                                webElement = helper.element_classname(element);
                                 System.out.println("type: " + Config.LOCATOR_TYPE_CLASS);
                                 break;
                         }
@@ -135,27 +137,27 @@ public class FileLoader {
                         String data = obj.get("data").getAsString();
                         webElement.sendKeys(data);
                     } else if (action.equals("switchToNative")) {
-                        switchToNative();
+                        helper.switchToNative();
                     } else if (action.equals("switchToWebView")) {
-                        switchToWebView(); //切换到WebView Context
-                        setWait(4);
-                        System.out.println(driver.getPageSource());
+                        helper.switchToWebView(); //切换到WebView Context
+                        helper.setWait(4);
+                        System.out.println(helper.getDriver().getPageSource());
                     } else if (action.equals("waitFor")) {
-                        waitFor(webElement);
+                        helper.waitFor(webElement);
                     } else if (action.equals("scrollUp")) {
-                        swipe(getHeight() * 3 / 4, getWidth() / 2, getHeight() / 4, getWidth() / 2, 500);
+                        helper.swipe(helper.getHeight() * 3 / 4, helper.getWidth() / 2, helper.getHeight() / 4, helper.getWidth() / 2, 500);
                     } else if (action.equals("scrollDown")) {
-                        swipe(getHeight() / 4, getWidth() / 2, getHeight() * 3 / 4, getWidth() / 2, 500);
+                        helper.swipe(helper.getHeight() / 4, helper.getWidth() / 2, helper.getHeight() * 3 / 4, helper.getWidth() / 2, 500);
                     } else if (action.equals("scrollLeft")) {
-                        swipe(getHeight() / 2 , getWidth() * 3 / 4, getHeight() / 2, getWidth() / 4, 500);
+                        helper.swipe(helper.getHeight() / 2 , helper.getWidth() * 3 / 4, helper.getHeight() / 2, helper.getWidth() / 4, 500);
                     } else if (action.equals("scrollRight")) {
-                        swipe(getHeight() / 2, getWidth() / 4, getHeight() / 2, getWidth() * 3 / 4, 500);
+                        helper.swipe(helper.getHeight() / 2, helper.getWidth() / 4, helper.getHeight() / 2, helper.getWidth() * 3 / 4, 500);
                     }
 
                     if (i < actions.size() - 1) {
                         String nextElement = actions.get(i + 1).getAsJsonObject().get("element").getAsString();
                         if (nextElement != null && !nextElement.equals("")) {
-                            waitFor(nextElement); //等待下一个element加载出来后再进行点击
+                            helper.waitFor(nextElement); //等待下一个element加载出来后再进行点击
                             System.out.println("wait for:" + nextElement);
                         }
                     }

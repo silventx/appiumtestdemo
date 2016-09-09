@@ -17,19 +17,23 @@ public class TestNGListener extends TestListenerAdapter {
     @Override
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
+/*
         logger.info("【" + tr.getName() + " Start】");
         extent= GameBoxTest.getExtent();
         test= extent.startTest(tr.getName());
+*/
     }
 
     @Override
     public void onTestFailure(ITestResult tr) {
         super.onTestFailure(tr);
+/*
         takeScreenShot(tr);
 
         logger.info("【" + tr.getName() + " Failure】");
         test.log(LogStatus.FAIL, tr.getThrowable());
         extent.endTest(test);
+*/
 
     }
 
@@ -37,19 +41,23 @@ public class TestNGListener extends TestListenerAdapter {
     @Override
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
+/*
 
         takeScreenShot(tr);
         logger.info("【" + tr.getName() + " Skipped】");
         test.log(LogStatus.SKIP, "SKIP");
         extent.endTest(test);
+*/
     }
 
     @Override
     public void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
+/*
         logger.info("【" + tr.getName() + " Success】");
         test.log(LogStatus.PASS, "Pass");
         extent.endTest(test);
+*/
     }
 
     @Override

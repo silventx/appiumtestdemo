@@ -17,14 +17,16 @@ public class UIElements {
 
     private String rule; //该组控件拥有的统一规则
     private List<WebElement> elements;
+    private Helper helper;
 
-    public UIElements(String rule) {
+    public UIElements(String rule, Helper helper) {
         this.rule = rule;
+        this.helper = helper;
         elements = new ArrayList<WebElement>();
         if (isId(rule)) {
-            elements = Helper.elements(By.id(rule));
+            elements = helper.elements(By.id(rule));
         } else {
-            elements = Helper.elements(By.xpath(rule));
+            elements = helper.elements(By.xpath(rule));
         }
     }
 
@@ -53,7 +55,7 @@ public class UIElements {
     }
 
     public void refresh() {
-        setElements(Helper.elements(By.xpath(this.rule)));
+        setElements(helper.elements(By.xpath(this.rule)));
     }
 
     private boolean isId(String rule) { //判断所给的rule是xpath还是id

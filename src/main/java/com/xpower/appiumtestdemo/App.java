@@ -4,19 +4,12 @@ package com.xpower.appiumtestdemo;
 //import com.xpower.appiumtestdemo.util.TestNGListener;
 //import com.xpower.appiumtestdemo.util.ExtentReporterNGListener;
 //import com.xpower.appiumtestdemo.util.TestNGListener;
-import jdk.internal.org.xml.sax.SAXException;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
-import org.apache.commons.cli.*;
-import org.testng.ITestNGListener;
-import org.testng.TestNG;
-import org.testng.xml.XmlClass;
-import org.testng.xml.XmlSuite;
-import org.testng.xml.XmlTest;
 
-import javax.swing.text.html.parser.Parser;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.net.URL;
+import com.xpower.appiumtestdemo.util.ExtentReporterNGListener;
+import org.apache.commons.cli.*;
+import org.testng.TestNG;
+import org.testng.xml.XmlSuite;
+
 import java.util.*;
 
 /**
@@ -25,7 +18,6 @@ import java.util.*;
  */
 public class App 
 {
-
 
 
     public static void main( String[] args )
@@ -64,22 +56,42 @@ public class App
 //        suites.add(new Environment().getPath());
 
 
+/*
         Map<String, String> params = initCLI(args);
+        System.out.println("appPath =====> " + params.get("appPath"));
+        System.out.println("testngPath =====> " + params.get("testngPath"));
+        System.out.println("configPath =====> " + params.get("configPath"));
+        System.out.println("reportPath =====> " + params.get("reportPath"));
+*/
 
+/*
         XmlSuite suite = new XmlSuite();
         suite.setName("MyTestSuite");
-        suite.setListeners(Arrays.asList("com.xpower.appiumtestdemo.util.TestNGListener", "com.xpower.appiumtestdemo.util.ExtentReporterNGListener"));
+        suite.setListeners(Arrays.asList("com.xpower.appiumtestdemo.util.ExtentReporterNGListener"));
+        suite.setFileName(params.get("testngPath"));
+*/
+
+/*
         List<XmlClass> classes = new ArrayList<XmlClass>();
         classes.add(new XmlClass("com.xpower.appiumtestdemo.GameBoxTest"));
         XmlTest test = new XmlTest(suite);
         test.setName("MyTests");
         test.setXmlClasses(classes);
+*/
 
+/*
         suite.setParameters(params);
 
         List<XmlSuite> suites = new ArrayList<XmlSuite>();
         suites.add(suite);
-        testng.setXmlSuites(suites);
+*/
+
+        List<String> suites = new ArrayList<String>();
+        suites.add(args[0]);//path to xml..
+        testng.setTestSuites(suites);
+        testng.setListenerClasses(Arrays.asList(new Class[] {
+                ExtentReporterNGListener.class
+        }));
 
         testng.run();
 
@@ -106,6 +118,11 @@ public class App
         option.setRequired(false);
         options.addOption(option);
 
+        option = new Option("t", true, "path of testng.xml");
+        option.setRequired(true);
+        options.addOption(option);
+
+
         HelpFormatter formatter = new HelpFormatter();
         formatter.setWidth(110);
         CommandLine cmd = null;
@@ -115,6 +132,8 @@ public class App
             String appPath = cmd.getOptionValue("a");
             String reportPath = cmd.getOptionValue("r");
             String configPath = cmd.getOptionValue("c");
+            String testngPath = cmd.getOptionValue("t");
+/*
             if (appPath != null) {
                 parameters.put("appPath", appPath);
             } else {
@@ -130,6 +149,17 @@ public class App
             } else {
                 parameters.put("configPath", "default");
             }
+            if (testngPath != null) {
+                parameters.put("testngPath", testngPath);
+            } else {
+                parameters.put("testngPath", (testngPath == null ? "default" : testngPath));
+            }
+*/
+
+            parameters.put("appPath", (appPath == null ? "default" : appPath));
+            parameters.put("reportPath", (reportPath == null ? "default" : reportPath));
+            parameters.put("configPath", (configPath == null ? "default" : configPath));
+            parameters.put("testngPath", (testngPath == null ? "default" : testngPath));
 
         } catch (ParseException e) {
             formatter.printHelp("ERROR", options, true);

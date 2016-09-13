@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 
-
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.Set;
@@ -18,34 +18,30 @@ import static com.xpower.appiumtestdemo.util.Helper.*;
 
 public class GameBoxTest extends BaseTest {
 
-    public boolean hasApp = false, hasConfig = false, hasReport = false;
 
-    @BeforeSuite
-    @Parameters({"appPath", "configPath", "reportPath"})
-    @Override
-    public void setUp(String appPath, String configPath, String reportPath) throws Exception {
-
-        System.out.println("game box test");
-
-        System.out.println(appPath + configPath + reportPath);
-        if (!appPath.equals("default")) {
-            Config.APP_PATH = appPath;
-            System.out.println("get a:" +appPath);
-            this.hasApp = true;
-        }
-        if (!configPath .equals("default")) {
-            Config.CONFIG_PATH = configPath;
-            System.out.println("get c:" +configPath);
-
-            this.hasConfig = true;
-        }
-        if (!reportPath.equals("default")) {
-            Config.REPORT_PATH = reportPath;
-            System.out.println("get r:" + reportPath);
-            this.hasReport = true;
-        }
-        super.setUp(appPath, configPath, reportPath);
-    }
+//    @BeforeSuite
+//    @Parameters({"appPath", "configPath", "reportPath"})
+//    @Override
+//    public void setUp(String appPath, String configPath, String reportPath) throws Exception {
+//
+//        System.out.println("game box test");
+//
+//        System.out.println(appPath + configPath + reportPath);
+//        if (!appPath.equals("default")) {
+//            Config.APP_PATH = appPath;
+//            System.out.println("get a:" +appPath);
+//        }
+//        if (!configPath .equals("default")) {
+//            Config.CONFIG_PATH = configPath;
+//            System.out.println("get c:" +configPath);
+//        }
+//        if (!reportPath.equals("default")) {
+//            Config.REPORT_PATH = reportPath;
+//            System.out.println("get r:" + reportPath);
+//        }
+//        super.setUp(appPath, configPath, reportPath);
+//    }
+//>>>>>>> f462c2f718e860df7cad1e5b2da040cf71b50749:src/main/java/com/xpower/appiumtestdemo/GameBoxTest.java
 
 //    @BeforeSuite
 //    @Parameters({"appPath", "configPath", "reportPath"})
@@ -68,36 +64,43 @@ public class GameBoxTest extends BaseTest {
 
     @Test
     public void testAll() {
-        FileLoader fileLoader = new FileLoader(Config.CONFIG_PATH);
-        fileLoader.loadConfig();
+//        FileLoader fileLoader = new FileLoader(Config.CONFIG_PATH, helper);
+//        fileLoader.loadConfig();
 
-        System.out.println("load finished");
-        
-        new ActivityIterator(new UIActivity(null)).run();
+//<<<<<<< HEAD:src/test/java/com/xpower/appiumtestdemo/GameBoxTest.java
+//        System.out.println("load finished");
+//
+//        new ActivityIterator(new UIActivity(null)).run();
+//=======
+//        doPrevious();
+        helper.element_id("com.m4399.gamecenter:id/tv_skip").click();
+        helper.detectDialog(); //判断是否弹出更新窗口。
+        new ActivityIterator(new UIActivity(null, this)).run();
+//>>>>>>> f462c2f718e860df7cad1e5b2da040cf71b50749:src/main/java/com/xpower/appiumtestdemo/GameBoxTest.java
     }
 
     private void doPrevious() {
-        element_id("com.m4399.gamecenter:id/tv_skip").click();
-        element_name("我").click();
-        element_id("com.m4399.gamecenter:id/btn_login").click();
-//        Assert.assertTrue(element_id("com.m4399.gamecenter:id/ll_login_weibo").isDisplayed());
-        element_id("com.m4399.gamecenter:id/ll_login_weibo").click();
-        getCurrentActivity();
+        helper.element_id("com.m4399.gamecenter:id/tv_skip").click();
+        helper.element_name("我").click();
+        helper.element_id("com.m4399.gamecenter:id/btn_login").click();
+        Assert.assertTrue(helper.element_id("com.m4399.gamecenter:id/ll_login_weibo").isDisplayed());
+        helper.element_id("com.m4399.gamecenter:id/ll_login_weibo").click();
+        helper.getCurrentActivity();
         Set<String> contextNames = driver.getContextHandles();
         for (String contextName : contextNames) {
             System.out.println(contextNames); //prints out something like [NATIVE_APP, WEBVIEW_<APP_PKG_NAME>]
         }
-        switchToWebView(); //切换到WebView Context
-        setWait(4);
+        helper.switchToWebView(); //切换到WebView Context
+        helper.setWait(4);
         System.out.println(driver.getPageSource());
 
-        element_id("userId").sendKeys(Config.WEIBO_USERNAME);
-        element_id("passwd").sendKeys(Config.WEIBO_PASSWORD);
-        element_classname("btnP").click();
-        switchToNative();
+        helper.element_id("userId").sendKeys(Config.WEIBO_USERNAME);
+        helper.element_id("passwd").sendKeys(Config.WEIBO_PASSWORD);
+        helper.element_classname("btnP").click();
+        helper.switchToNative();
 
-        waitFor(By.name("找游戏"));
-        element_name("找游戏").click();
+        helper.waitFor(By.name("找游戏"));
+        helper.element_name("找游戏").click();
     }
 
 //        WebElement skipButton = element_id("com.m4399.gamecenter:id/tv_skip");

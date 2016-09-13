@@ -6,6 +6,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.sun.jna.platform.win32.WTypes;
 import com.xpower.appiumtestdemo.Config;
 import com.xpower.appiumtestdemo.GameBoxTest;
+import com.xpower.appiumtestdemo.util.BaseTest;
 import com.xpower.appiumtestdemo.util.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -27,19 +28,22 @@ public class UIActivity extends Helper{
     private ElementSet elementSet;
     private TabSet tabSet;
     private UIActivity parent;
+    private BaseTest testHost;
 
     private ExtentReports extent;
     private ExtentTest extentTest;
 
     private static boolean shutdown = false;
 
-    public UIActivity(UIActivity parent) {
+    public UIActivity(UIActivity parent, BaseTest testHost) {
+        super(testHost.getDriver());
         this.activityName = getCurrentActivity();
         this.url = activityName;
         this.parent = parent;
+        this.testHost = testHost;
 
-        this.elementSet = new ElementSet();
-        this.tabSet = new TabSet();
+        this.elementSet = new ElementSet(driver);
+        this.tabSet = new TabSet(driver);
         elementSet.init();
         tabSet.init();
 
@@ -47,7 +51,7 @@ public class UIActivity extends Helper{
             System.out.println("new uiactivity created! name=" + this.activityName + " parent=" + this.parent.getActivityName());
         }
 
-        this.extent = GameBoxTest.getExtent();
+        this.extent = testHost.getExtent();
         this.extentTest = extent.startTest(this.activityName);
 
 //        snapShot(extentTest);
@@ -83,13 +87,13 @@ public class UIActivity extends Helper{
                             System.out.println("click tab " + i + " " + j);
                             tabSet.updatePosition(i, j + 1);
                             System.out.println(this.activityName + "- update tab position: " + i + " " + j);
-                            new UITab(this, null).performClick();
+                            new UITab(this, null, testHost).performClick();
                         }
                         tabSet.updatePosition(i + 1, 0);
                     }
                 }
             } else {
-                new UITab(this, elementSet).performClick();
+                new UITab(this, elementSet, testHost).performClick();
 //                if (elementSet.getElementsMap().size() != 0) {
 //                    for (int i = elementSet.getPositon().getType(); i < elementSet.getElementsMap().size(); i++) {
 //                        UIElements elements = elementSet.getElementsMap().get(i);
@@ -213,7 +217,7 @@ public class UIActivity extends Helper{
                     back();
                 }
             }
-            UIActivity activity = new UIActivity(this);
+            UIActivity activity = new UIActivity(this, testHost);
             activity.performClick();
             ActivityIterator.stack.push(activity);
         } else if (isDialogShown()) { //仍在同一个Activity但是出现弹窗

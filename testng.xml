@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Appium Test">
+<suite name="Appium Test" parallel="tests" thread-count="2">
 
-  <listeners>
-    <listener class-name="com.xpower.appiumtestdemo.util.TestNGListener" />
-    <listener class-name="com.xpower.appiumtestdemo.util.ExtentReporterNGListener"/>
-  </listeners>
+    <listeners>
+        <!--<listener class-name="com.xpower.appiumtestdemo.util.TestNGListener"/>-->
+        <!--<listener class-name="com.xpower.appiumtestdemo.util.ExtentReporterNGListener"/>-->
+    </listeners>
 
-  <test name="Appium Test 1">
-    <classes>
-      <!--<class name="com.xpower.appiumtestdemo.AppTest" />-->
-      <class name="com.xpower.appiumtestdemo.GameBoxTest" />
-    </classes>
-  </test>
+    <parameter name="appPath" value="default"/>
+    <parameter name="configPath" value="default"/>
+    <parameter name="reportPath" value="report"/>
+
+    <test name="Appium_Test_1">
+
+        <parameter name="port" value="4399"/>
+        <parameter name="udid" value="192.168.108.101:5555"/>
+
+        <classes>
+            <!--<class name="com.xpower.appiumtestdemo.AppTest" />-->
+            <class name="com.xpower.appiumtestdemo.GameBoxTest"/>
+        </classes>
+    </test>
+
+    <test name="Appium_Test_2">
+
+        <parameter name="port" value="4933"/>
+        <parameter name="udid" value="192.168.108.102:5555"/>
+
+        <classes>
+            <!--<class name="com.xpower.appiumtestdemo.AppTest" />-->
+            <class name="com.xpower.appiumtestdemo.GameBoxTest"/>
+        </classes>
+    </test>
 </suite>

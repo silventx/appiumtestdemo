@@ -1,8 +1,8 @@
 package com.xpower.appiumtestdemo.model;
 
 import com.relevantcodes.extentreports.ExtentReports;
-import com.sun.xml.internal.ws.developer.MemberSubmissionEndpointReference;
 import com.xpower.appiumtestdemo.GameBoxTest;
+import com.xpower.appiumtestdemo.util.BaseTest;
 import com.xpower.appiumtestdemo.util.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -20,20 +20,23 @@ public class UITab extends Helper{
     private String activityName; //当前Activity的名称
     private ElementSet elementSet;
     private UIActivity parent;
+    private BaseTest testHost;
 
 //    private UIPositon positon;
 
 
     private static boolean shutdown = false;
 
-    public UITab(UIActivity parent, ElementSet elementSet) {
+    public UITab(UIActivity parent, ElementSet elementSet, BaseTest testHost) {
+        super(testHost.getDriver());
         this.parent = parent;
         this.activityName = this.parent.getActivityName();
+        this.testHost = testHost;
         if (elementSet != null) {
             this.elementSet = elementSet;
             elementSet.updatePosition(0, 0);
         } else {
-            this.elementSet = new ElementSet();
+            this.elementSet = new ElementSet(driver);
             this.elementSet.init();
         }
 
@@ -94,7 +97,7 @@ public class UITab extends Helper{
                 if (isDialogShown()) {
                     closeDialog();
                 }
-                UIActivity activity = new UIActivity(this.parent);
+                UIActivity activity = new UIActivity(this.parent, testHost);
                 ActivityIterator.stack.push(activity);
                 System.out.println("push: " + activity.getActivityName() + " current stack size: " + ActivityIterator.stack.size());
                 ActivityIterator.checkedList.add(activity.getActivityName());

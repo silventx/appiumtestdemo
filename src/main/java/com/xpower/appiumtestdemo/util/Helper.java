@@ -30,26 +30,30 @@ import java.util.concurrent.TimeUnit;
  */
 public class Helper {
 
-    public static AndroidDriver driver;
-    private static WebDriverWait driverWait;
+    protected AndroidDriver driver;
+    private WebDriverWait driverWait;
 
-    public static void init(AndroidDriver webDriver) {
+    public Helper() {
+    }
+
+    public Helper(AndroidDriver webDriver) {
         driver = webDriver;
         int timeoutInSec = 10; //等待控件加载的Timeout
         driverWait = new WebDriverWait(webDriver, timeoutInSec);
     }
 
-    public static void setWait(int seconds) {
+    public void setWait(int seconds) {
         driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
 
 
-    public static WebElement element(By locator) {
+    public WebElement element(By locator) {
         return driver.findElement(locator);
     }
 
+
     //直接通过任意一种方式找到当前界面中的控件
-    public static WebElement element(String locator) {
+    public  WebElement element(String locator) {
         WebElement webElement = null;
         switch (getLcatorType(locator)) {
             case Config.LOCATOR_TYPE_ID:
@@ -68,35 +72,35 @@ public class Helper {
         return webElement;
     }
 
-    public static WebElement element_id(String id) {
-        return element(By.id(id));
+    public  WebElement element_id(String id) {
+        return driver.findElement(By.id(id));
     }
 
-    public static WebElement element_name(String name) {
+    public WebElement element_name(String name) {
         return element(By.name(name));
     }
 
-    public static WebElement element_classname(String classname) {
+    public WebElement element_classname(String classname) {
         return element(By.className(classname));
     }
 
-    public static WebElement element_xpath(String xpath) {
+    public WebElement element_xpath(String xpath) {
         return element(By.xpath(xpath));
     }
 
-    public static List<WebElement> elements(By locator) {
+    public List<WebElement> elements(By locator) {
         return driver.findElements(locator);
     }
 
-    public static List<WebElement> elements_id(String id) {
+    public List<WebElement> elements_id(String id) {
         return driver.findElements(By.id(id));
     }
 
-    public static void back() {
+    public void back() {
         driver.navigate().back();
     }
 
-    public static void backTo(String activityName) {
+    public void backTo(String activityName) {
         while (true) {
             back();
             if (getCurrentActivity().equals(activityName)) {
@@ -106,8 +110,9 @@ public class Helper {
         }
     }
 
-    public static void goBack() {
+    public void goBack() {
         while (true) {
+            System.out.println("goBack from:" + getCurrentActivity());
             back();
             if (isDialogShown()) { //返回时遇到dialog则点击确定
                 try {
@@ -116,16 +121,18 @@ public class Helper {
                     back(); //若对话框没有取消按钮则直接按返回键关闭
                 }
             }
-            if (ActivityIterator.stack.size() != 0 && getCurrentActivity().equals(ActivityIterator.stack.getTop().getActivityName())) {
-                System.out.println("back to: " + ActivityIterator.stack.getTop().getActivityName() + "success");
-                break;
-            } else {
-                break;
+            if (getCurrentActivity() != null) {
+                if (ActivityIterator.stack.size() != 0 && getCurrentActivity().equals(ActivityIterator.stack.getTop().getActivityName())) {
+                    System.out.println("back to: " + ActivityIterator.stack.getTop().getActivityName() + "success");
+                    break;
+                } else {
+                    break;
+                }
             }
         }
     }
 
-    public static void closeDialog() {
+    public void closeDialog() {
         while (true) {
             back();
             if (elements(By.xpath("//android.widget.LinearLayout[contains(@resource-id, 'dialog')]")).size() == 0) {
@@ -135,31 +142,32 @@ public class Helper {
         }
     }
 
-    public static AndroidDriver getDriver() {
+    public AndroidDriver getDriver() {
         return driver;
     }
 
-    public static WebDriverWait getDriverWait() {
+    public WebDriverWait getDriverWait() {
         return driverWait;
     }
 
-    public static void swipe(int startx, int starty, int endx, int endy, int duration) {
+    public void swipe(int startx, int starty, int endx, int endy, int duration) {
         driver.swipe(startx, starty, endx, endy, duration);
     }
 
-    public static void scroll(String text) {
-        driver.scrollTo(text);
+    @Deprecated
+    public void scroll(String text) {
+//        driver.scrollTo(text);
     }
 
-    public static void waitFor(By locator) {
+    public void waitFor(By locator) {
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static void waitFor(WebElement element) {
+    public void waitFor(WebElement element) {
         driverWait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public static void waitFor(String element) {
+    public void waitFor(String element) {
         switch (getLcatorType(element)) {
             case Config.LOCATOR_TYPE_ID:
                 waitFor(By.id(element));
@@ -176,25 +184,25 @@ public class Helper {
         }
     }
 
-    public static void waitFor(By locator, int sec) {
+    public void waitFor(By locator, int sec) {
         new WebDriverWait(driver, sec).until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     /**
      * 获得屏幕高度
      */
-    public static  int getHeight() {
+    public int getHeight() {
         return driver.manage().window().getSize().height;
     }
 
     /**
      * 获得屏幕高度
      */
-    public static int getWidth() {
+    public int getWidth() {
         return driver.manage().window().getSize().width;
     }
 
-    public static void switchToWebView() {
+    public void switchToWebView() {
         String context = null;
         Set<String> contextNames = driver.getContextHandles();
         for (String contextName : contextNames) {
@@ -209,7 +217,7 @@ public class Helper {
         driver.context(context);
     }
 
-    public static void switchToNative() {
+    public void switchToNative() {
         driver.context("NATIVE_APP");
     }
 
@@ -222,7 +230,7 @@ public class Helper {
 //
 //    }
 
-    public static void clickElements(String xpath, int keyword) {
+    public void clickElements(String xpath, int keyword) {
         List<WebElement> elements = elements(By.xpath(xpath));
         WebElement element;
         int size = elements.size();
@@ -256,11 +264,11 @@ public class Helper {
 
 
 
-
     }
 
-    public static String getCurrentActivity() {
+    public String getCurrentActivity() {
         String currentActivity = null;
+/*
         try {
             String line;
             Process process = Runtime.getRuntime().exec("adb shell dumpsys activity | grep mFocusedActivity");
@@ -268,17 +276,24 @@ public class Helper {
             if ((line = reader.readLine()) != null) {
 //                System.out.println(line);
             }
-            currentActivity = line.split("/")[1].split(" ")[0];
+            if (line != null) {
+                currentActivity = line.split("/")[1].split(" ")[0];
+            }
 //            System.out.println(currentActivity);
             reader.close();
+            //杀掉当前process
+            process.destroy();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+*/
+        currentActivity = driver.getContext();
         return currentActivity;
     }
 
-    public  boolean hasChecked(String activityName) {
+
+    public boolean hasChecked(String activityName) {
         for (int i = ActivityIterator.checkedList.size() - 1; i > 0; i--) {
             if (activityName.equals(ActivityIterator.checkedList.get(i))) {
                 return true;
@@ -289,7 +304,7 @@ public class Helper {
 
 
     //获得当前屏幕的截图
-    public  void snapShot(ExtentTest test, String description) {
+    public void snapShot(ExtentTest test, String description) {
         String filename = Long.toString(System.currentTimeMillis());
         ScreenSrc.getScreen(driver, Long.toString(System.currentTimeMillis()));
         if (test != null) {
@@ -303,7 +318,7 @@ public class Helper {
     }
 
     //判断用来定位控件的locator是根据name id还是xpath
-    public static int getLcatorType(String locator) {
+    public int getLcatorType(String locator) {
         if (locator.contains(":")) {
             return Config.LOCATOR_TYPE_ID;
         } else if (locator.contains("//")) {
@@ -316,13 +331,13 @@ public class Helper {
     }
 
     //判断是否弹出dialog
-    public static boolean isDialogShown() {
+    public boolean isDialogShown() {
         return elements(By.xpath("//android.widget.LinearLayout[contains(@resource-id, 'dialog')]")).size() != 0;
     }
 
-    public static void detectDialog() {
-        if (elements(By.xpath("//*[contains(@resource-id, 'dialog')]")).size() > 0) {
-            System.out.println("detect dialog!");
+
+    public void detectDialog() {
+        if (elements(By.xpath("//*[contains(@resource-id, 'dialog')]")).size() != 0) {
             back();
         }
     }

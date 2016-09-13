@@ -19,6 +19,7 @@ public class FileLoader {
 
     private String path = null;
     private String content = null;
+    private Helper helper;
 
     public static final String KEY_ITERATOR_LIST = "iteratorList";
     public static final String KEY_TAB_LIST = "tabList";
@@ -29,9 +30,10 @@ public class FileLoader {
 //    public static final String KEY_SCROLL_LEFT = "scrollLeft";
 //    public static final String KEY_SCROLL_RIGHT = "scrollRight";
 
-    public FileLoader(String path) {
+    public FileLoader(String path, Helper helper) {
         this.path = path;
         this.content = null;
+        this.helper = helper;
     }
 
     public JsonObject getContent() {
@@ -105,7 +107,7 @@ public class FileLoader {
                     WebElement webElement = null;
                     try {
                         if (element != null && !element.equals("")) {
-                            webElement = element(element);
+                            webElement = helper.element(element);
                         }
 //                            int type = Helper.getLcatorType(element);
 //                            switch (type) {
@@ -129,9 +131,9 @@ public class FileLoader {
 //                        }
                     } catch (NoSuchElementException e) {
                         System.out.println("find NoSuchElementException");
-                        back();
+                        helper.back();
                         try {
-                            webElement = element(element);
+                            webElement = helper.element(element);
                         } catch (NoSuchElementException ee) {
                             ee.printStackTrace();
                         }
@@ -143,7 +145,7 @@ public class FileLoader {
                             webElement.click();
                         } catch (NoSuchElementException e) {
                             System.out.println("find NoSuchElementException");
-                            back();
+                            helper.back();
                             try {
                                 webElement.click();
                             } catch (NoSuchElementException ee) {
@@ -156,31 +158,31 @@ public class FileLoader {
                         String data = obj.get("data").getAsString();
                         webElement.sendKeys(data);
                     } else if (action.equals("switchToNative")) {
-                        switchToNative();
+                        helper.switchToNative();
                     } else if (action.equals("switchToWebView")) {
-                        switchToWebView(); //切换到WebView Context
-                        setWait(4);
-                        System.out.println(driver.getPageSource());
+                        helper.switchToWebView(); //切换到WebView Context
+                        helper.setWait(4);
+                        System.out.println(helper.getDriver().getPageSource());
                     } else if (action.equals("waitFor")) {
-                        waitFor(webElement);
+                        helper.waitFor(webElement);
                     } else if (action.equals("scrollUp")) {
-                        swipe(getHeight() * 3 / 4, getWidth() / 2, getHeight() / 4, getWidth() / 2, 500);
+                        helper.swipe(helper.getHeight() * 3 / 4, helper.getWidth() / 2, helper.getHeight() / 4, helper.getWidth() / 2, 500);
                     } else if (action.equals("scrollDown")) {
-                        swipe(getHeight() / 4, getWidth() / 2, getHeight() * 3 / 4, getWidth() / 2, 500);
+                        helper.swipe(helper.getHeight() / 4, helper.getWidth() / 2, helper.getHeight() * 3 / 4, helper.getWidth() / 2, 500);
                     } else if (action.equals("scrollLeft")) {
-                        swipe(getHeight() / 2 , getWidth() * 3 / 4, getHeight() / 2, getWidth() / 4, 500);
+                        helper.swipe(helper.getHeight() / 2 , helper.getWidth() * 3 / 4, helper.getHeight() / 2, helper.getWidth() / 4, 500);
                     } else if (action.equals("scrollRight")) {
-                        swipe(getHeight() / 2, getWidth() / 4, getHeight() / 2, getWidth() * 3 / 4, 500);
+                        helper.swipe(helper.getHeight() / 2, helper.getWidth() / 4, helper.getHeight() / 2, helper.getWidth() * 3 / 4, 500);
                     }
 
                     if (i < actions.size() - 1) {
                         String nextElement = actions.get(i + 1).getAsJsonObject().get("element").getAsString();
                         if (nextElement != null && !nextElement.equals("")) {
                             try {
-                                waitFor(nextElement); //等待下一个element加载出来后再进行点击
+                                helper.waitFor(nextElement); //等待下一个element加载出来后再进行点击
                             } catch (Exception e) {
-                                back();
-                                waitFor(nextElement);
+                                helper.back();
+                                helper.waitFor(nextElement);
                             }
                             System.out.println("wait for:" + nextElement);
                         }

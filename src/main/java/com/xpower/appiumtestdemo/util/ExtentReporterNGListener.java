@@ -26,7 +26,6 @@ public class ExtentReporterNGListener implements IReporter{
 
     private ExtentReports extent;
 
-    @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory){
         // true为覆盖已经生成的报告
         extent = new ExtentReports(outputDirectory + File.separator + "ExtentReport.html", true  // true为覆盖已经生成的报告，false 在已有的报告上面生成，不会覆盖旧的结果

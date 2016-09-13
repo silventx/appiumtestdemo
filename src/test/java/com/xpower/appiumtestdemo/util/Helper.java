@@ -93,6 +93,7 @@ public class Helper {
     }
 
     public static void back() {
+        System.out.println("back from: " + getCurrentActivity());
         driver.navigate().back();
     }
 
@@ -108,6 +109,7 @@ public class Helper {
 
     public static void goBack() {
         while (true) {
+            System.out.println("goBack from:" + getCurrentActivity());
             back();
             if (isDialogShown()) { //返回时遇到dialog则点击确定
                 try {
@@ -116,11 +118,13 @@ public class Helper {
                     back(); //若对话框没有取消按钮则直接按返回键关闭
                 }
             }
-            if (ActivityIterator.stack.size() != 0 && getCurrentActivity().equals(ActivityIterator.stack.getTop().getActivityName())) {
-                System.out.println("back to: " + ActivityIterator.stack.getTop().getActivityName() + "success");
-                break;
-            } else {
-                break;
+            if (getCurrentActivity() != null) {
+                if (ActivityIterator.stack.size() != 0 && getCurrentActivity().equals(ActivityIterator.stack.getTop().getActivityName())) {
+                    System.out.println("back to: " + ActivityIterator.stack.getTop().getActivityName() + "success");
+                    break;
+                } else {
+                    break;
+                }
             }
         }
     }
@@ -256,7 +260,6 @@ public class Helper {
 
 
 
-
     }
 
     public static String getCurrentActivity() {
@@ -268,9 +271,13 @@ public class Helper {
             if ((line = reader.readLine()) != null) {
 //                System.out.println(line);
             }
-            currentActivity = line.split("/")[1].split(" ")[0];
+            if (line != null) {
+                currentActivity = line.split("/")[1].split(" ")[0];
+            }
 //            System.out.println(currentActivity);
             reader.close();
+            //杀掉当前process
+            process.destroy();
 
         } catch (IOException e) {
             e.printStackTrace();

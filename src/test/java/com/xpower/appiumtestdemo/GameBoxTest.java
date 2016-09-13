@@ -72,7 +72,7 @@ public class GameBoxTest extends BaseTest {
         fileLoader.loadConfig();
 
         System.out.println("load finished");
-        
+
         new ActivityIterator(new UIActivity(null)).run();
     }
 

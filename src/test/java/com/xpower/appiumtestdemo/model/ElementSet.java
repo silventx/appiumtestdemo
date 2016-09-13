@@ -23,12 +23,6 @@ public class ElementSet extends Helper {
 //    private UIPositon tabPosition;
 
     public ElementSet() {
-//        adImages = new ArrayList<UIElement>();
-//        tags = new ArrayList<UIElement>();
-//        titles = new ArrayList<UIElement>();
-//        gameNames = new ArrayList<UIElement>();
-//        tabs = new ArrayList<UIElement>();
-//        items = new ArrayList<UIElement>();
         elementsMap = new ArrayList<UIElements>();
 //        tabMap = new ArrayList<UIElements>();
 
@@ -50,37 +44,8 @@ public class ElementSet extends Helper {
                 System.out.println(uiElements.getRule() + ":" + uiElements.getElements().size());
                 totalElementsSize += uiElements.getElements().size();
             }
-//            for (int i = 0; i < Config.TAB_LIST.length; i++) {
-//                UIElements uiElements = new UIElements(Config.TAB_LIST[i]);
-//                tabMap.add(uiElements);
-//                initElements(uiElements.getElements(), elements(By.xpath(uiElements.getRule())));
-//                System.out.println(uiElements.getRule() + ":" + uiElements.getElements().size());
-//                totalElementsSize += uiElements.getElements().size();
-//                tabSize += uiElements.getElements().size();
-//            }
         }
-//            initElements(adImages, elements(By.id(Config.RULE_ADIMAGE)));
-//            initElements(tags, elements(By.xpath(Config.RULE_TAG)));
-//            initElements(titles, elements(By.xpath(Config.RULE_TITLE)));
-//            initElements(gameNames, elements(By.xpath(Config.RULE_GAMENAME)));
-//            initElements(tabs, elements(By.xpath(Config.RULE_TAB)));
-//            initElements(items, elements(By.id(Config.RULE_ITEM)));
-//            totalElementsSize = adImages.size() + tags.size() + titles.size() + gameNames.size() + tabs.size() + items.size();
-
     }
-//
-//    public void refresh() {
-//        System.out.println("detecting UI......");
-//        adImages.clear();
-//        tags.clear();
-//        titles.clear();
-//        gameNames.clear();
-//        initElements(adImages, elements(By.id(Config.RULE_ADIMAGE)));
-//        initElements(tags, elements(By.xpath(Config.RULE_TAG)));
-//        initElements(titles, elements(By.xpath(Config.RULE_TITLE)));
-//        initElements(gameNames, elements(By.xpath(Config.RULE_GAMENAME)));
-//    }
-
 
     public int getTotalElementsSize() {
         return this.totalElementsSize;
@@ -108,55 +73,4 @@ public class ElementSet extends Helper {
         return this.elementsMap;
     }
 
-//    public List<UIElements> getTabMap() {
-//        return this.tabMap;
-//    }
-
-//    public List<UIElement> getAdImages() {
-//        return adImages;
-//    }
-//
-//    public void setAdImages(List<UIElement> adImages) {
-//        this.adImages = adImages;
-//    }
-//
-//    public List<UIElement> getTags() {
-//        return tags;
-//    }
-//
-//    public void setTags(List<UIElement> tags) {
-//        this.tags = tags;
-//    }
-//
-//    public List<UIElement> getTitles() {
-//        return titles;
-//    }
-//
-//    public void setTitles(List<UIElement> titles) {
-//        this.titles = titles;
-//    }
-//
-//    public List<UIElement> getGameNames() {
-//        return gameNames;
-//    }
-//
-//    public void setGameNames(List<UIElement> gameNames) {
-//        this.gameNames = gameNames;
-//    }
-//
-//    public List<UIElement> getTabs() {
-//        return tabs;
-//    }
-//
-//    public void setTabs(List<UIElement> tabs) {
-//        this.tabs = tabs;
-//    }
-//
-//    public List<UIElement> getItems() {
-//        return items;
-//    }
-//
-//    public void setItems(List<UIElement> items) {
-//        this.items = items;
-//    }
 }

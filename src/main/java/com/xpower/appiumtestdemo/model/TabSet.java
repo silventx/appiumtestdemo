@@ -2,6 +2,7 @@ package com.xpower.appiumtestdemo.model;
 
 import com.xpower.appiumtestdemo.Config;
 import com.xpower.appiumtestdemo.util.Helper;
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -20,7 +21,8 @@ public class TabSet extends Helper {
     private UIPositon positon;
 //    private UIPositon tabPosition;
 
-    public TabSet() {
+    public TabSet(AndroidDriver driver) {
+        super(driver);
         tabMap = new ArrayList<UIElements>();
         positon = new UIPositon(0, 0);
 //        tabPosition = new UIPositon(0, 0);
@@ -34,7 +36,7 @@ public class TabSet extends Helper {
             System.out.println("find web view!!");
         } else {
             for (int i = 0; i < Config.TAB_LIST.length; i++) {
-                UIElements uiElements = new UIElements(Config.TAB_LIST[i]);
+                UIElements uiElements = new UIElements(Config.TAB_LIST[i], this);
 //                uiElements.setElements(elements(By.id(uiElements.getRule())));
                 tabMap.add(uiElements);
                 System.out.println(uiElements.getRule() + ":" + uiElements.getElements().size());

@@ -40,7 +40,7 @@ public class ElementSet extends Helper {
     }
 
     public void init() {
-        System.out.println("detecting UI......");
+        System.out.println("xxxxxxxxxxxxxxxxxx--- detecting UI ...... ---xxxxxxxxxxxx");
         if (elements(By.xpath("//android.webkit.WebView")).size() != 0) { //若界面中包含WebView则跳过检测，直接将所有控件数置为0，避免长时间检测
             totalElementsSize = 0;
             System.out.println("find web view!!");
@@ -68,7 +68,7 @@ public class ElementSet extends Helper {
 //            initElements(tabs, elements(By.xpath(Config.RULE_TAB)));
 //            initElements(items, elements(By.id(Config.RULE_ITEM)));
 //            totalElementsSize = adImages.size() + tags.size() + titles.size() + gameNames.size() + tabs.size() + items.size();
-
+        System.out.println("xxxxxxxxxxxxxxxxxx--- detecting UI complete ---xxxxxxxxxxxx");
     }
 //
 //    public void refresh() {

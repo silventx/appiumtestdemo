@@ -89,9 +89,9 @@ public class App
         List<String> suites = new ArrayList<String>();
         suites.add(args[0]);//path to xml..
         testng.setTestSuites(suites);
-        testng.setListenerClasses(Arrays.asList(new Class[] {
-                ExtentReporterNGListener.class
-        }));
+//        testng.setListenerClasses(Arrays.asList(new Class[] {
+//                ExtentReporterNGListener.class
+//        }));
 
         testng.run();
 

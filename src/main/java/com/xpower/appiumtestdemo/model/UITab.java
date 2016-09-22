@@ -41,7 +41,7 @@ public class UITab extends Helper{
         }
 
         if(parent != null) {
-            System.out.println("new uitab created!" + " parent=" + this.parent.getActivityName());
+            System.err.println("new uitab created!" + " parent=" + this.parent.getActivityName());
         }
 
         snapShot(parent.getExtentTest(), null);
@@ -54,16 +54,16 @@ public class UITab extends Helper{
                 int currentIndex = elementSet.getPositon().getIndex();
                 if (elements.size() != 0) {
                     for (int j = currentIndex; j < elements.size(); j++) {
-                        System.out.println("Want to click:" + elements.getRule() + "[" + i + "," + j + "]");
+                        System.err.println("Want to click:" + elements.getRule() + "[elementSet: " + i + ", tab element: " + j + "]");
                         try {
                             elements.get(j).click();
                         } catch (NoSuchElementException e) {
-                            System.out.println("Find NoSuchElementException!!!!");
+                            System.err.println("Find NoSuchElementException!!!!");
                             back();
                             try {
                                 elements.get(j).click();
                             } catch (NoSuchElementException exception) {
-                                System.out.println("Still Find NoSuchElementException!!!!");
+                                System.err.println("Still Find NoSuchElementException!!!!");
                                 back();
                                 elements.get(j).click();
                             }
@@ -71,7 +71,7 @@ public class UITab extends Helper{
                         }
 //                        snapShot();
                         elementSet.updatePosition(i, j + 1);
-                        System.out.println(this.activityName + "- update position: " + i + " " + j);
+                        System.err.println(this.activityName + "- update position: elementSet " + i + ", tab element: " + j);
                         clickOver();
                     }
                     elementSet.updatePosition(i + 1, 0);

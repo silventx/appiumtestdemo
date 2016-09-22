@@ -67,26 +67,37 @@ public class UIActivity extends Helper{
             ActivityIterator.checkedList.add(this.activityName);
         } else {
             if (tabSet.getTotalSize() != 0) {
-                System.out.println("tabset totalsize: " + tabSet.getTotalSize());
+                System.err.println("tabset totalsize: " + tabSet.getTotalSize());
                 for (int i = tabSet.getPositon().getType(); i < tabSet.getTabMap().size(); i++) {
-                    System.out.println("tabsize: " + tabSet.getTabMap().size() + " current i = " + i);
+                    System.err.println("tabsize: " + tabSet.getTabMap().size() + " current tab index = " + i);
                     UIElements elements = tabSet.getTabMap().get(i);
                     int currentIndex = tabSet.getPositon().getIndex();
                     if (elements.size() != 0) {
                         for (int j = currentIndex; j < elements.size(); j++) {
-                            System.out.println("Want to click:" + elements.getRule() + "[" + i + "," + j + "]");
+                            System.err.println("Want to click:" + elements.getRule() + "[" + i + "," + j + "]");
                             try {
                                 elements.get(j).click();
                             } catch (NoSuchElementException e) {
-                                System.out.println("Find NoSuchElementException!!!!");
+//                                System.err.println("Find NoSuchElementException!!!!");
+                                e.printStackTrace();
                                 back();
-                                elements.get(j).click();
+//                                elements.get(j).click();
                             }
 
-//                            snapShot();
-                            System.out.println("click tab " + i + " " + j);
+                            snapShot(extentTest, "");
+                            System.err.println("click tab " + i + " " + j);
                             tabSet.updatePosition(i, j + 1);
-                            System.out.println(this.activityName + "- update tab position: " + i + " " + j);
+                            System.err.println(this.activityName + "- update tab position: " + i + " " + j);
+
+                            for (int k = 0; k < 10; k++) {
+                                System.err.println("----------------- start new UITab test -----------------");
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
                             new UITab(this, null, testHost).performClick();
                         }
                         tabSet.updatePosition(i + 1, 0);

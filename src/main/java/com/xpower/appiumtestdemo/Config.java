@@ -57,7 +57,7 @@ public class Config {
 
     public static  String[] TAB_LIST = {
             "//android.widget.RelativeLayout[@clickable='true']//android.widget.TextView[contains(@resource-id, 'tab')]/..",
-            "com.m4399.gamecenter:id/itemTextView"
+            "com.m4399.gamecenter.plugin.main:id/itemTextView"
     };
 //
 //    public static  String[] BLACK_LIST = null;

@@ -16,6 +16,7 @@ import org.testng.annotations.*;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static com.xpower.appiumtestdemo.util.Helper.*;
 
@@ -69,17 +70,22 @@ public class GameBoxTest extends BaseTest {
 //        fileLoader.loadConfig();
 
 //        doPrevious();
-        helper.element_id("com.m4399.gamecenter:id/tv_skip").click();
+//        helper.element_id("com.m4399.gamecenter:id/tv_skip").click();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        //for 3.0
+        helper.element_id("com.m4399.gamecenter.plugin.main:id/tv_skip").click();
         helper.detectDialog(); //判断是否弹出更新窗口。
+        doPrevious();
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         new ActivityIterator(new UIActivity(null, this)).run();
     }
 
     private void doPrevious() {
-        helper.element_id("com.m4399.gamecenter:id/tv_skip").click();
+//        helper.element_id("com.m4399.gamecenter:id/tv_skip").click();
         helper.element_name("我").click();
-        helper.element_id("com.m4399.gamecenter:id/btn_login").click();
-        Assert.assertTrue(helper.element_id("com.m4399.gamecenter:id/ll_login_weibo").isDisplayed());
-        helper.element_id("com.m4399.gamecenter:id/ll_login_weibo").click();
+        helper.element_id("com.m4399.gamecenter.plugin.main:id/btn_login").click();
+        Assert.assertTrue(helper.element_id("com.m4399.gamecenter.plugin.main:id/ll_login_weibo").isDisplayed());
+        helper.element_id("com.m4399.gamecenter.plugin.main:id/ll_login_weibo").click();
         helper.getCurrentActivity();
         Set<String> contextNames = driver.getContextHandles();
         for (String contextName : contextNames) {

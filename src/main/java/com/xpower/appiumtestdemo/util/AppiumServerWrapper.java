@@ -10,8 +10,8 @@ import java.io.File;
 
 public class AppiumServerWrapper {
 
-    String appiumInstallationDir = "C:/Program Files (x86)";// e.g. in Windows
-    //String appiumInstallationDir = "/Applications";// e.g. for Mac
+    String appiumInstallationDir_Win = "C:/Program Files (x86)";// e.g. in Windows
+    String appiumInstallationDir_Mac = "/Applications";// e.g. for Mac
     AppiumDriverLocalService service = null;
     int serverPort;
     String deviceName;
@@ -24,17 +24,17 @@ public class AppiumServerWrapper {
 
         if (osName.contains("Windows")) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-                    .usingDriverExecutable(new File(appiumInstallationDir + File.separator + "Appium" + File.separator + "node.exe"))
-                    .withAppiumJS(new File(appiumInstallationDir + File.separator + "Appium" + File.separator
+                    .usingDriverExecutable(new File(appiumInstallationDir_Win + File.separator + "Appium" + File.separator + "node.exe"))
+                    .withAppiumJS(new File(appiumInstallationDir_Win + File.separator + "Appium" + File.separator
                             + "node_modules" + File.separator + "appium" + File.separator + "bin" + File.separator + "appium.js"))
                     .withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER, "" + (serverPort + 64))
             .usingPort(serverPort));
 
         } else if (osName.contains("Mac")) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-                    .usingDriverExecutable(new File(appiumInstallationDir + "/Appium.app/Contents/Resources/node/bin/node"))
+                    .usingDriverExecutable(new File(appiumInstallationDir_Mac + "/Appium.app/Contents/Resources/node/bin/node"))
                     .withAppiumJS(new File(
-                            appiumInstallationDir + "/Appium.app/Contents/Resources/node_modules/appium/bin/appium.js"))
+                            appiumInstallationDir_Mac + "/Appium.app/Contents/Resources/node_modules/appium/bin/appium.js"))
                     .withLogFile(new File(new File(classPathRoot, File.separator + "log"), "androidLog.txt")));
 
         } else {

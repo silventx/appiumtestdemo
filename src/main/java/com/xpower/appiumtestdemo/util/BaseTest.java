@@ -16,6 +16,7 @@ import org.testng.annotations.*;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by 4399-3040 on 2016/8/4.
@@ -46,6 +47,7 @@ public class BaseTest {
     public void beforeMethod(Method method) {
         System.out.println("xxxxxxxxxxxxxx" + method.getName());
         extentTest = reports.startTest(method.getName());
+
 //        extentTest = reports.startTest("test_test");
     }
 

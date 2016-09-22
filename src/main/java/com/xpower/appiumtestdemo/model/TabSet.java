@@ -30,7 +30,7 @@ public class TabSet extends Helper {
     }
 
     public void init() {
-        System.out.println("detecting tab......");
+        System.out.println("xxxxxxxxxxxxxxxxxx--- detecting tab ...... ---xxxxxxxxxxxxxxxxxxx");
         if (elements(By.xpath("//android.webkit.WebView")).size() != 0) { //若界面中包含WebView则跳过检测，直接将所有控件数置为0，避免长时间检测
 //            totalElementsSize = 0;
             System.out.println("find web view!!");
@@ -44,6 +44,7 @@ public class TabSet extends Helper {
                 totalSize += uiElements.getElements().size();
             }
         }
+        System.out.println("xxxxxxxxxxxxxxxxxx--- detecting tab complete ---xxxxxxxxxxxxxxxxxxxx");
     }
 
 

@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Appium Test" parallel="tests" thread-count="2">
+<suite name="Appium Test" parallel="tests" thread-count="3">
 
     <listeners>
         <!--<listener class-name="com.xpower.appiumtestdemo.util.TestNGListener"/>-->
-        <!--<listener class-name="com.xpower.appiumtestdemo.util.ExtentReporterNGListener"/>-->
+        <listener class-name="com.xpower.appiumtestdemo.util.ExtentReporterNGListener"/>
     </listeners>
 
     <parameter name="appPath" value="default"/>
     <parameter name="configPath" value="default"/>
     <parameter name="reportPath" value="report"/>
 
+    <!--<test name="Appium_Test_1">-->
+
+        <!--<parameter name="port" value="4399"/>-->
+        <!--<parameter name="udid" value="192.168.108.101:5555"/>-->
+
+        <!--<classes>-->
+            <!--&lt;!&ndash;<class name="com.xpower.appiumtestdemo.AppTest" />&ndash;&gt;-->
+            <!--<class name="com.xpower.appiumtestdemo.GameBoxTest"/>-->
+        <!--</classes>-->
+    <!--</test>-->
+
     <test name="Appium_Test_1">
 
-        <parameter name="port" value="4399"/>
-        <parameter name="udid" value="192.168.108.101:5555"/>
+        <parameter name="port" value="9934"/>
+        <parameter name="udid" value="0123456789ABCDEF"/>
 
         <classes>
             <!--<class name="com.xpower.appiumtestdemo.AppTest" />-->
@@ -21,14 +32,25 @@
         </classes>
     </test>
 
-    <test name="Appium_Test_2">
+    <!--<test name="Appium_Test_2">-->
 
-        <parameter name="port" value="4933"/>
-        <parameter name="udid" value="192.168.108.102:5555"/>
+        <!--<parameter name="port" value="4933"/>-->
+        <!--<parameter name="udid" value="85UACM6TNDAU"/>-->
 
-        <classes>
-            <!--<class name="com.xpower.appiumtestdemo.AppTest" />-->
-            <class name="com.xpower.appiumtestdemo.GameBoxTest"/>
-        </classes>
-    </test>
+        <!--<classes>-->
+            <!--&lt;!&ndash;<class name="com.xpower.appiumtestdemo.AppTest" />&ndash;&gt;-->
+            <!--<class name="com.xpower.appiumtestdemo.GameBoxTest"/>-->
+        <!--</classes>-->
+    <!--</test>-->
+
+    <!--<test name="Appium_Test_3">-->
+
+        <!--<parameter name="port" value="5399"/>-->
+        <!--<parameter name="udid" value="192.168.108.103:5555"/>-->
+
+        <!--<classes>-->
+            <!--&lt;!&ndash;<class name="com.xpower.appiumtestdemo.AppTest" />&ndash;&gt;-->
+            <!--<class name="com.xpower.appiumtestdemo.GameBoxTest"/>-->
+        <!--</classes>-->
+    <!--</test>-->
 </suite>

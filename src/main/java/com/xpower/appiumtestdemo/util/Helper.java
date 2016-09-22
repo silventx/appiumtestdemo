@@ -178,6 +178,7 @@ public class Helper {
         String context = null;
         Set<String> contextNames = driver.getContextHandles();
         for (String contextName : contextNames) {
+            System.out.println(contextName);
            if (contextName.contains("WEBVIEW")) { //Context中包含WEBVIEW字段的则为WebView的Context
                System.out.println("find WebView context:" + contextName);
                context = contextName;
@@ -241,10 +242,10 @@ public class Helper {
 
     public String getCurrentActivity() {
         String currentActivity = null;
-/*
         try {
             String line;
-            Process process = Runtime.getRuntime().exec("adb shell dumpsys activity | grep mFocusedActivity");
+            String udid = (String)driver.getCapabilities().getCapability("udid");
+            Process process = Runtime.getRuntime().exec("adb -s " + udid + " shell dumpsys activity | grep mFocusedActivity");
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             if ((line = reader.readLine()) != null) {
 //                System.out.println(line);
@@ -255,9 +256,10 @@ public class Helper {
 
         } catch (IOException e) {
             e.printStackTrace();
+            currentActivity = driver.getContext();
         }
-*/
-        currentActivity = driver.getContext();
+//        currentActivity = driver.getCurrentUrl();
+        System.err.println("++++++++++++++++++" + currentActivity + "++++++++++++++++++");
         return currentActivity;
     }
 

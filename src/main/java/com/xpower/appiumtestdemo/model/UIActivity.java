@@ -84,7 +84,7 @@ public class UIActivity extends Helper{
 //                                elements.get(j).click();
                             }
 
-                            snapShot(extentTest, "");
+//                            snapShot(extentTest, "");
                             System.err.println("click tab " + i + " " + j);
                             tabSet.updatePosition(i, j + 1);
                             System.err.println(this.activityName + "- update tab position: " + i + " " + j);
